@@ -1,0 +1,27 @@
+<div class="sticky-top premium-sticky-top" style="padding-bottom:10px;margin-bottom:6px">
+    <div class="premium-panel" style="margin-bottom:8px;padding:8px 12px">
+        <div class="panel-header">
+            <span class="panel-title">FONT STUDIO</span>
+            <label class="mini-switch" style="color:var(--amber)">WORD WRAP <input type="checkbox" id="wrapFontCheck" aria-label="Font Word Wrap Toggle" onchange="document.getElementById('tInput')&&document.getElementById('tInput').classList.toggle('wrap-mode',this.checked);localStorage.setItem('glyphlab_toggle_wrapFontCheck',this.checked)"><span class="mini-slider"></span></label>
+        </div>
+        <div class="panel-row" style="margin-bottom:6px">
+            <textarea id="tInput" aria-label="Font Studio Input" class="transform-input txt-input premium-input flex-input" placeholder="Type text to convert..." oninput="typeof renderTransform==='function'&&renderTransform()"></textarea>
+            <button aria-label="Clear Font Input" class="btn amber-btn icon-only" onclick="document.getElementById('tInput').value='';typeof renderTransform==='function'&&renderTransform()" title="Clear Text">
+                <svg width="16" height="16" aria-hidden="true">
+                    <use href="#ic-clr"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="panel-row">
+            <input id="fontSearch" aria-label="Search Fonts" class="category-search premium-input flex-input" style="margin-bottom:0" placeholder="Search specific font styles..." oninput="typeof renderTransform==='function'&&renderTransform()" onkeydown="event.key==='Enter'&&typeof renderTransform==='function'&&renderTransform()">
+            <button aria-label="Clear Font Search" class="btn amber-btn icon-only" onclick="document.getElementById('fontSearch').value='';typeof renderTransform==='function'&&renderTransform()" title="Clear Search">
+                <svg width="16" height="16" aria-hidden="true">
+                    <use href="#ic-clr"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;align-items:center;padding:0 4px">
+        <label class="mini-switch" style="color:var(--amber)">EXPAND LIST <input type="checkbox" id="expandFontCheck" aria-label="Expand Font List Toggle" onchange="document.getElementById('transformContent')&&document.getElementById('transformContent').classList.toggle('font-grid-expanded',this.checked);localStorage.setItem('glyphlab_toggle_expandFontCheck',this.checked)"><span class="mini-slider"></span></label>
+    </div>
+</div>

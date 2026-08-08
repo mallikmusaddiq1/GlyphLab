@@ -1,0 +1,175 @@
+.premium-input {
+    background: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--text-main);
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.premium-input:focus {
+    border-color: var(--border-hover) !important;
+    box-shadow: var(--focus-ring) !important;
+    background: #1a1a1a !important;
+    outline: 0;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+}
+
+.input-group label,
+.input-group input {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.input-group input,
+.input-group textarea {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    width: 100%;
+    height: 32px;
+    line-height: 20px;
+}
+
+#draftArea,
+.category-search,
+.transform-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-main);
+    border-radius: 8px;
+    outline: 0;
+    transition: 0.3s;
+    line-height: 20px;
+}
+
+.transform-input {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    height: 32px;
+}
+
+.transform-input::placeholder,
+.category-search::placeholder,
+.search-textarea::placeholder,
+#draftArea::placeholder {
+    font-size: 0.8rem;
+}
+
+.category-search {
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    height: 32px;
+}
+
+#draftArea {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 1rem;
+    resize: none;
+    font-family: inherit;
+}
+
+.search-textarea {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    text-align: left;
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-main);
+    border-radius: 8px;
+    outline: 0;
+    transition: 0.3s;
+    resize: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 32px;
+    line-height: 20px;
+    font-family: inherit;
+}
+
+.search-textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.search-textarea:focus {
+    border-color: var(--border-hover);
+    box-shadow: var(--focus-ring);
+}
+
+.search-textarea.invalid,
+.input-group input.invalid {
+    border-color: var(--error);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+.search-textarea.wrap-mode {
+    height: 70px;
+    white-space: pre-wrap;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.txt-input {
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 32px !important;
+    resize: none;
+    scrollbar-width: none;
+}
+
+.txt-input::-webkit-scrollbar {
+    display: none;
+}
+
+.range-input {
+    width: 100%;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    padding: 0 10px;
+    margin: 0;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+.range-btn {
+    width: 110px;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    font-size: 0.8rem;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.flex-input {
+    flex: 1;
+    margin-bottom: 0;
+}

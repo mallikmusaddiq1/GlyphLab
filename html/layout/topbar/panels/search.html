@@ -1,0 +1,21 @@
+<div id="panelToolSearch" style="width:100%">
+    <div class="premium-panel">
+        <div class="panel-header">
+            <span class="panel-title">SEARCH</span>
+            <label class="mini-switch" style="color:var(--amber)">WORD WRAP <input type="checkbox" id="wrapSearchCheck" aria-label="Search Word Wrap Toggle"><span class="mini-slider"></span></label>
+        </div>
+        <div class="panel-row">
+            <textarea id="charInput" aria-label="Search Input" class="search-textarea premium-input flex-input" placeholder="Search any characters..."></textarea>
+            <button class="btn primary-btn action-btn" aria-label="Execute Search" onclick="findChar()" title="Search">
+                <svg width="16" height="16" aria-hidden="true">
+                    <use href="#ic-sch"></use>
+                </svg>
+            </button>
+            <button class="btn amber-btn icon-only" aria-label="Clear Search Input" onclick='charInput.value="",document.getElementById("notFoundMsg").style.display="none",findChar()' title="Clear Search">
+                <svg width="16" height="16" aria-hidden="true">
+                    <use href="#ic-clr"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

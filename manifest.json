@@ -1,0 +1,15 @@
+{
+    "name": "GlyphLab - Infinite Unicode Explorer",
+    "short_name": "GlyphLab",
+    "description": "Find any symbol, emoji, or invisible space. The ultimate open-source Unicode toolkit for power users, scripters, and developers.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#050811",
+    "theme_color": "#050811",
+    "icons": [{
+        "src": "./assets/icon.png",
+        "sizes": "1024x1024",
+        "type": "image/png",
+        "purpose": "any maskable"
+    }]
+}

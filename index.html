@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script>
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    </script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+    <link rel="icon" type="image/png" href="./assets/icon.png?v=1">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#050811">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>GlyphLab - Infinite Unicode Explorer</title>
+    <meta name="title" content="GlyphLab - Infinite Unicode Explorer">
+    <meta name="description" content="Find any symbol, emoji, or invisible space. The ultimate open-source Unicode toolkit for power users, scripters, and developers.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glyphlab.com/">
+    <meta property="og:title" content="GlyphLab - Infinite Unicode Explorer">
+    <meta property="og:description" content="Find any symbol, emoji, or invisible space. The ultimate open-source Unicode toolkit.">
+    <meta property="og:image" content="./assets/icon.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="GlyphLab - Infinite Unicode Explorer">
+    <meta property="twitter:description" content="Find any symbol, emoji, or invisible space.">
+    <meta property="twitter:image" content="./assets/icon.png">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "GlyphLab",
+            "description": "Infinite Unicode Explorer tool",
+            "applicationCategory": "DeveloperApplication"
+        }
+    </script>
+    <link rel="stylesheet" href="./css/base/variables.css">
+    <link rel="stylesheet" href="./css/base/reset.css">
+    <link rel="stylesheet" href="./css/base/typography.css">
+    <link rel="stylesheet" href="./css/components/buttons.css">
+    <link rel="stylesheet" href="./css/components/inputs.css">
+    <link rel="stylesheet" href="./css/components/switches.css">
+    <link rel="stylesheet" href="./css/components/cards.css">
+    <link rel="stylesheet" href="./css/layout/topbar.css">
+    <link rel="stylesheet" href="./css/layout/sidebar.css">
+    <link rel="stylesheet" href="./css/layout/modal.css">
+    <link rel="stylesheet" href="./css/layout/main-grid.css">
+    <link rel="stylesheet" href="./css/features/symbol-card.css">
+    <link rel="stylesheet" href="./css/features/fab.css">
+    <link rel="stylesheet" href="./css/features/filters.css">
+    <link rel="stylesheet" href="./css/features/bookmarks.css">
+    <link rel="stylesheet" href="./css/features/fonts.css">
+    <link rel="stylesheet" href="./css/features/gsi.css">
+    <link rel="stylesheet" href="./css/features/alerts.css">
+    <link rel="stylesheet" href="./css/utilities/animations.css">
+    <link rel="stylesheet" href="./css/utilities/helpers.css">
+    <link rel="stylesheet" href="./css/utilities/media-queries.css">
+    <style>
+        #unifiedModal,
+        .modal-box,
+        #transformContent,
+        .sidebar,
+        .top-bar,
+        .main-scroll-area {
+            will-change: transform, scroll-position;
+            contain: layout style;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./js/utils/component-loader.js"></script>
+</body>
+
+</html>

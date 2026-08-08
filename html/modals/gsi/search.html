@@ -1,0 +1,13 @@
+<div class="panel-row" style="margin-bottom:0">
+    <input id="gsiSearch" aria-label="Search Global Index" class="category-search premium-input flex-input" style="margin-bottom:0" placeholder="Search index..." oninput="filterGSI()">
+    <button aria-label="Clear Index Search" class="btn amber-btn icon-only" onclick='document.getElementById("gsiSearch").value="";filterGSI()' title="Clear Search">
+        <svg width="18" height="18" aria-hidden="true">
+            <use href="#ic-clr"></use>
+        </svg>
+    </button>
+    <button aria-label="Toggle Sorting Area" class="btn amber-btn icon-only" id="gsiSortToggleBtn" onclick="toggleGsiSortArea()" title="Toggle Sorting">
+        <svg width="18" height="18" aria-hidden="true">
+            <use href="#ic-fil"></use>
+        </svg>
+    </button>
+</div>

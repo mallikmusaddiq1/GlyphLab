@@ -1,0 +1,15 @@
+<div id="bkmWrapper" style="display:none">
+    <div class="sticky-header" style="position:sticky;top:-24px;background:var(--modal-bg);z-index:100;padding:24px 24px 10px 24px;margin:-24px -24px 10px -24px;border-radius:20px 20px 0 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span class="modal-icon-title" style="font-size:1.1rem;font-weight:800">
+                <svg width="20" height="20" aria-hidden="true">
+                    <use href="#ic-bkm"></use>
+                </svg> BOOKMARKS
+            </span>
+            <button aria-label="Close Bookmarks" class="close-btn c-btn" style="color:var(--error)" onclick="closeModals()" onfocus="this.blur()" style="outline:none;box-shadow:none">&times;</button>
+        </div>
+        %ACTIONS%
+        %TABS%
+    </div>
+    %LISTS%
+</div>

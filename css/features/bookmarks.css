@@ -1,0 +1,199 @@
+.detail-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 3px 8px;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.detail-item:hover {
+    background: rgba(255, 215, 0, 0.05);
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.detail-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.detail-val {
+    font-family: monospace;
+    color: var(--text-main);
+    font-size: 0.8rem;
+    word-break: break-all;
+    text-align: right;
+    max-width: 65%;
+}
+
+.bkm-btn-style {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: 0 0;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.det-lbl {
+    color: var(--amber);
+    flex-shrink: 0;
+}
+
+.det-val {
+    word-break: break-all;
+    white-space: normal;
+    text-align: right;
+}
+
+.det-val-sm {
+    font-size: 0.85rem;
+}
+
+.det-val-lg {
+    font-family: sans-serif, system-ui;
+    font-size: 1.25rem;
+}
+
+.details-actions-panel {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px !important;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 8px 10px !important;
+}
+
+.details-actions-panel .btn {
+    min-height: 28px;
+    padding: 5px 14px !important;
+    font-size: 0.78rem !important;
+    border-radius: 10px !important;
+    letter-spacing: 0.5px;
+}
+
+.details-hero-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    height: auto;
+    margin-bottom: 8px !important;
+    padding: 20px !important;
+    text-align: center;
+    overflow: visible;
+}
+
+.details-hero-panel .md-t1 {
+    font-size: 3.8rem !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    max-width: 100%;
+    word-break: break-all;
+}
+
+.details-hero-panel .md-t2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 26px;
+    margin: 0 !important;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--amber) !important;
+    font-size: 0.72rem !important;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+.details-list-panel {
+    padding: 8px !important;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.details-list-panel .detail-item {
+    margin-bottom: 0 !important;
+    min-height: 26px;
+    padding: 3px 8px !important;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.035);
+    gap: 8px;
+}
+
+.details-list-panel .detail-label {
+    font-size: 0.62rem !important;
+    line-height: 1.05;
+    letter-spacing: 0.15px;
+    color: var(--amber);
+    min-width: 38%;
+    max-width: 44%;
+}
+
+.details-list-panel .detail-val {
+    font-size: 0.66rem !important;
+    line-height: 1.1;
+    max-width: 60%;
+    letter-spacing: 0.2px;
+}
+
+.details-list-panel .detail-val[style*="sans-serif"] {
+    font-size: 0.7rem !important;
+}
+
+.details-list-panel .detail-item:hover {
+    background: rgba(255, 215, 0, 0.06);
+    border-color: rgba(255, 215, 0, 0.28);
+    box-shadow: none;
+}
+
+#bkmContent span {
+    font-size: 0.8rem !important;
+}
+
+#bkmContent .detail-item> :first-child {
+    font-size: 2.2rem !important;
+    min-width: 65px !important;
+    text-align: center;
+    display: inline-block;
+}
+
+#bkmContent .detail-item {
+    padding-left: 4px;
+}
+
+#bkmContent .detail-val,
+#bkmContent .detail-label,
+#bkmContent .det-val,
+#bkmContent .det-lbl,
+#bkmContent span:not(.modal-icon-title) {
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    word-break: normal !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-width: 0 !important;
+    text-overflow: clip !important;
+    display: block !important;
+}
+
+#bkmContent .detail-val::-webkit-scrollbar,
+#bkmContent .detail-label::-webkit-scrollbar,
+#bkmContent .det-val::-webkit-scrollbar,
+#bkmContent .det-lbl::-webkit-scrollbar,
+#bkmContent span:not(.modal-icon-title)::-webkit-scrollbar {
+    display: none !important;
+}

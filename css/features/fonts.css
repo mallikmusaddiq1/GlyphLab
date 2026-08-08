@@ -1,0 +1,17 @@
+#transformContent:not(.font-grid-expanded) .detail-item {
+    height: 26px !important;
+    overflow: hidden;
+}
+
+#transformContent:not(.font-grid-expanded) .detail-val {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 70%;
+}
+
+#transformContent:not(.font-grid-expanded) .detail-label {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}

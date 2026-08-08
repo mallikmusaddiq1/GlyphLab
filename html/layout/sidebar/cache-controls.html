@@ -1,0 +1,22 @@
+<div class="premium-panel" style="margin-top:4px;margin-bottom:4px;padding:10px;display:flex;flex-direction:column;gap:8px;">
+    <div style="display:flex;gap:6px;align-items:center;">
+        <button aria-label="Clear Cache" onclick="window.executeCustomClearCache()" class="btn danger-btn" style="flex:1;margin:0;display:flex;align-items:center;justify-content:center;height:32px;">CLEAR CACHE</button>
+    </div>
+    <div id="cacheTogglesContainer" style="display:flex;flex-direction:column;gap:4px;">
+        <label class="toggle-switch" style="padding:6px 10px;min-height:32px;background:rgba(255,255,255,0.01);">
+            <span class="toggle-label" style="color:var(--amber);font-size:.72rem;">ALL APP CACHE & STATE</span>
+            <input type="checkbox" id="ccAppCacheCheck" checked aria-label="Clear All App Cache">
+            <span class="slider"></span>
+        </label>
+        <label class="toggle-switch" style="padding:6px 10px;min-height:32px;background:rgba(255,255,255,0.01);">
+            <span class="toggle-label" style="color:var(--amber);font-size:.72rem;">SINGLE BOOKMARKS</span>
+            <input type="checkbox" id="ccSingleBkmCheck" aria-label="Clear Single Bookmarks">
+            <span class="slider"></span>
+        </label>
+        <label class="toggle-switch" style="padding:6px 10px;min-height:32px;background:rgba(255,255,255,0.01);">
+            <span class="toggle-label" style="color:var(--amber);font-size:.72rem;">COMBINED BOOKMARKS</span>
+            <input type="checkbox" id="ccCombinedBkmCheck" aria-label="Clear Combined Bookmarks">
+            <span class="slider"></span>
+        </label>
+    </div>
+</div>

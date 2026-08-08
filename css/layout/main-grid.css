@@ -1,0 +1,23 @@
+.main-scroll-area {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overscroll-behavior-y: contain;
+}
+
+.grid-container {
+    width: 100%;
+    max-width: 850px;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 120px;
+}
+
+.grid {
+    position: relative;
+    width: 100%;
+    display: block;
+}

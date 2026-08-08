@@ -1,0 +1,22 @@
+<div id="panelToolJump" style="width:100%;display:none">
+    <div class="premium-panel">
+        <div class="panel-header">
+            <span class="panel-title">JUMP</span>
+            <label class="mini-switch" style="visibility:hidden">WORD WRAP <input type="checkbox"><span class="mini-slider"></span></label>
+        </div>
+        <div class="panel-row">
+            <div style="display:flex;gap:6px;flex:1;justify-content:center">
+                <div class="input-group" style="flex:1">
+                    <label class="fw-bold" style="color:var(--amber)">DEC</label>
+                    <input id="jumpDec" aria-label="Decimal Input" class="premium-input" placeholder="33" maxlength="8" onkeydown="event.key==='Enter'&&jumpToHex()">
+                </div>
+                <div class="input-group" style="flex:1">
+                    <label class="fw-bold" style="color:var(--amber)">HEX</label>
+                    <input id="jumpHex" aria-label="Hex Input" class="premium-input" placeholder="0021" maxlength="6" onkeydown="event.key==='Enter'&&jumpToHex()">
+                </div>
+            </div>
+            <button class="btn primary-btn action-btn" aria-label="Jump to Hex" onclick='if(document.getElementById("charInput"))document.getElementById("charInput").value="";document.getElementById("notFoundMsg").style.display="none";jumpToHex()'>GO</button>
+            <button class="btn amber-btn icon-only" aria-label="Reset Jump Inputs" onclick="document.getElementById('jumpHex').value='0021';document.getElementById('jumpDec').value='33';if(document.getElementById('charInput'))document.getElementById('charInput').value='';document.getElementById('notFoundMsg').style.display='none';jumpToHex();" title="Reset Position">↺</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div id="gsiSortArea" style="display:none;flex-direction:column;gap:6px;margin-top:8px">
+    <div style="display:flex;justify-content:center;gap:6px">
+        <button aria-label="Sort Ascending" class="sort-pill active" id="btnGsiAsc" onclick="setGsiSort('ASC')">ASCENDING</button>
+        <button aria-label="Sort Descending" class="sort-pill" id="btnGsiDesc" onclick="setGsiSort('DESC')">DESCENDING</button>
+    </div>
+    <div id="gsiAlphaContainer" style="display:flex;gap:4px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch"></div>
+    <div style="display:flex;justify-content:center">
+        <button aria-label="Toggle Exact Match" class="sort-pill" id="btnGsiExact" onclick="toggleGsiExact()">EXACT</button>
+    </div>
+    <div style="display:flex;justify-content:center" id="gsiClearWrap">
+        <button aria-label="Clear GSI Filters" class="sort-pill sort-pill-red" onclick="clearGsiSort()">CLEAR</button>
+    </div>
+</div>

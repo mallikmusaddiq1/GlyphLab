@@ -1,0 +1,14 @@
+<div class="premium-panel details-actions-panel" id="bkmActionsBox" style="margin-bottom:8px;padding:8px 10px;">
+    <button aria-label="Export Bookmarks as HTML" class="btn copy-hex" id="bkmHtmlBtn" onclick="exportBkm('html')">EXPORT HTML</button>
+    <button aria-label="Export Bookmarks as JSON" class="btn btn-purple" id="bkmJsonExpBtn" onclick="exportBkm('json')">EXPORT JSON</button>
+    <button aria-label="Import Bookmarks from JSON" class="btn btn-orange" id="bkmJsonImpBtn" onclick="impBkmJ()">IMPORT JSON</button>
+</div>
+<div id="bkmProgCont" style="display:none;margin-bottom:12px;width:100%;flex-direction:column;align-items:center;gap:8px;padding:0 4px">
+    <div style="width:100%;background:rgba(255,255,255,0.1);border-radius:10px;height:8px;overflow:hidden">
+        <div id="bkmProgBar" style="width:0%;height:100%;background:linear-gradient(90deg, #FFA500, #FFD700);transition:width .1s linear"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;width:100%;font-size:.75rem;color:var(--text-muted);font-weight:bold">
+        <span id="bkmProgTxt">0%</span>
+        <span id="bkmProgETA">Calculating ETA...</span>
+    </div>
+</div>

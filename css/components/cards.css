@@ -1,0 +1,55 @@
+.premium-panel {
+    background: #0d0d0d;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    padding: 8px 12px;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-bottom: 6px;
+}
+
+.premium-panel span {
+    font-size: 0.8rem !important;
+}
+
+.thin-golden-border {
+    border: 1px solid var(--accent) !important;
+    box-shadow: 0 0 5px 1px rgba(255, 215, 0, 0.3) !important;
+    z-index: 2;
+}
+
+.normal-white-card {
+    border: 1px solid rgba(255, 255, 255, 1) !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    z-index: 1;
+}
+
+.normal-golden-card {
+    border: 1px solid var(--accent) !important;
+    box-shadow: none !important;
+    background: rgba(255, 215, 0, 0.02) !important;
+    z-index: 1;
+}
+
+.medium-white-glowing-card {
+    border: 2px solid rgba(255, 255, 255, 1) !important;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    z-index: 2;
+}
+
+.medium-golden-glow-card {
+    border: 2px solid var(--accent) !important;
+    box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.4) !important;
+    background: rgba(255, 215, 0, 0.04) !important;
+    z-index: 2;
+}
+
+.thick-golden-glowing-card {
+    border: 3px solid var(--accent) !important;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.6) !important;
+    background: rgba(255, 215, 0, 0.05) !important;
+    z-index: 3;
+}

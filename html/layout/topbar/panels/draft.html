@@ -1,0 +1,17 @@
+<div id="panelToolDraft" style="width:100%;display:none">
+    <div class="premium-panel">
+        <div class="panel-header">
+            <span class="panel-title">DRAFT</span>
+            <label class="mini-switch" style="color:var(--amber)">WORD WRAP <input type="checkbox" id="wrapDraftCheck" aria-label="Draft Word Wrap Toggle" onchange='$("draftArea").classList.toggle("wrap-mode",this.checked)'><span class="mini-slider"></span></label>
+        </div>
+        <div class="panel-row">
+            <textarea id="draftArea" aria-label="Draft Input Area" class="txt-input premium-input flex-input" placeholder="Click any characters to build your draft..."></textarea>
+            <button class="btn primary-btn action-btn" aria-label="Copy Draft" onclick="copyDraft()">COPY</button>
+            <button class="btn amber-btn icon-only" aria-label="Clear Draft" onclick="clearDraft()" title="Clear Draft">
+                <svg width="16" height="16" aria-hidden="true">
+                    <use href="#ic-clr"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

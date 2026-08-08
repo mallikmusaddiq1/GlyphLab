@@ -1,0 +1,14 @@
+<div class="top-bar">
+    %HEADER_BRAND%
+    <div id="toolbarCollapsible" style="width:100%;display:none;flex-direction:column;align-items:center;margin-top:5px;max-width:650px">
+        <div style="display:flex;justify-content:center;width:100%;margin-bottom:6px;">
+            <div id="tabToolSearch" role="tab" tabindex="0" aria-label="Search Area Tab" class="main-tab-btn active" onclick="switchToolbarTab('search')">SEARCH</div>
+            <div id="tabToolJump" role="tab" tabindex="0" aria-label="Jump Area Tab" class="main-tab-btn" onclick="switchToolbarTab('jump')">JUMP</div>
+            <div id="tabToolDraft" role="tab" tabindex="0" aria-label="Draft Area Tab" class="main-tab-btn" onclick="switchToolbarTab('draft')">DRAFT</div>
+        </div>
+        %PANEL_SEARCH%
+        %PANEL_JUMP%
+        %PANEL_DRAFT%
+    </div>
+    <div id="activeFiltersContainer"></div>
+</div>

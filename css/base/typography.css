@@ -1,0 +1,61 @@
+h1 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(to right, var(--accent), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+p {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.panel-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--amber);
+    letter-spacing: 1px;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--amber);
+}
+
+.modal-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.md-title-custom {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ffa500;
+    letter-spacing: 0.2px;
+}
+
+.md-t1 {
+    text-align: center;
+    font-size: 3.5rem;
+    margin-bottom: 5px;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.md-t2 {
+    text-align: center;
+    font-weight: 800;
+    color: var(--amber);
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

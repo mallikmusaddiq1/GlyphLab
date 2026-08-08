@@ -1,0 +1,50 @@
+.fw-bold {
+    font-weight: bold;
+}
+
+.text-pink {
+    color: var(--amber);
+}
+
+.highlight-text {
+    color: var(--accent);
+    background: 0 0;
+    font-weight: 900;
+}
+
+.active-filter .highlight-text {
+    color: #000;
+}
+
+.wrap-mode {
+    white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: 70px !important;
+    scrollbar-width: thin !important;
+}
+
+.c-amber {
+    color: var(--amber);
+    flex-shrink: 0;
+}
+
+.search-mode-btn {
+    flex: 1;
+    padding: 6px 4px;
+    background: var(--input-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.3s;
+}
+
+.search-mode-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.05);
+}

@@ -1,0 +1,195 @@
+.filters-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.filters-toggle {
+    padding: 12px 20px;
+    background: rgba(10, 10, 10, 0.85) !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8) !important;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    backdrop-filter: blur(15px);
+    transition: all 0.2s !important;
+    letter-spacing: 0.5px;
+}
+
+.filters-toggle:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 215, 0, 0.1) !important;
+    border-color: var(--border-hover) !important;
+}
+
+.filters-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--modal-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 10px;
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: var(--modal-sh);
+    gap: 4px;
+    width: 240px;
+}
+
+.filters-menu.show {
+    display: flex;
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+#shortcutsContainer {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-right: 4px;
+}
+
+.shortcut-btn {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 4px 8px;
+    min-height: 26px;
+    gap: 4px;
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.shortcut-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.shortcut-btn.active-filter {
+    background: var(--accent) !important;
+    color: #000 !important;
+}
+
+#activeFiltersContainer {
+    display: none;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-top: 12px;
+    width: 100%;
+    max-width: 650px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    align-items: center;
+}
+
+#activeFiltersContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.clear-all-btn {
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.02)) !important;
+    color: var(--error) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.05) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.clear-all-btn:hover {
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.05)) !important;
+    border-color: var(--error) !important;
+    color: #ffcccc !important;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+.clear-all-btn:active {
+    transform: scale(0.95) translateY(0) !important;
+}
+
+.clear-all-menu {
+    width: 100%;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    padding: 4px 14px;
+    display: none;
+}
+
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.filter-pill .close-pill {
+    cursor: pointer;
+    color: var(--amber);
+    font-size: 1.3rem;
+    line-height: 0.8;
+    border: none;
+    background: 0 0;
+    padding: 0 2px;
+    pointer-events: none;
+}
+
+.filter-text-wrap {
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    text-align: left;
+    -webkit-overflow-scrolling: touch;
+    line-height: normal;
+}
+
+#filtersMenu {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    z-index: 1002;
+}
