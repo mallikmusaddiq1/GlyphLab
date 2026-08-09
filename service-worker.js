@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v0.0.3",
+const CACHE_VERSION = "v0.0.4",
     CACHE_NAME = `glyphlab-cache-${CACHE_VERSION}`,
     PRECACHE_ASSETS = [
         "./",
