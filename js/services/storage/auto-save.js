@@ -124,12 +124,10 @@ function AS(immediate = false) {
                 toolbarCollapsible: getUIObj("toolbarCollapsible"),
                 filtersMenu: getUIObj("filtersMenu"),
                 gsiSortArea: getUIObj("gsiSortArea"),
-                uniModalTitle: document.getElementById("uniModalTitle") ?
-                    {
-                        t: document.getElementById("uniModalTitle").innerHTML,
-                        c: document.getElementById("uniModalTitle").style.color
-                    } :
-                    null
+                uniModalTitle: document.getElementById("uniModalTitle") ? {
+                    t: document.getElementById("uniModalTitle").innerHTML,
+                    c: document.getElementById("uniModalTitle").style.color
+                } : null
             };
 
             const f =
