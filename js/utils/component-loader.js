@@ -11,7 +11,7 @@
     };
 
     const iconNames = ["bkm", "clr", "det", "exp", "fab", "fil", "fnt", "gsi", "imp", "rnd", "sch", "set", "spn"];
-
+    
     const components = await Promise.all([
         loadHTML("./html/base/head-meta.html"),
         loadHTML("./html/svg/sprite-shell.html"),
@@ -74,14 +74,10 @@
         exportCss, exportHeader, exportFooter, ...icons
     ] = components;
 
-    window.EXPORT_TEMPLATES = {
-        css: exportCss,
-        header: exportHeader,
-        footer: exportFooter
-    };
+    window.EXPORT_TEMPLATES = { css: exportCss, header: exportHeader, footer: exportFooter };
 
     const domParser = new DOMParser();
-
+    
     const buildFragment = (templateStr, replacements = {}) => {
         let parsedStr = templateStr;
         for (let [key, value] of Object.entries(replacements)) {
@@ -96,61 +92,22 @@
     document.head.appendChild(buildFragment(headMeta));
 
     const appWrapper = document.createDocumentFragment();
-
-    appWrapper.appendChild(buildFragment(spriteShell, {
-        "%ICONS%": icons.join("")
-    }));
-    appWrapper.appendChild(buildFragment(sidebarShell, {
-        "%HEADER%": sidebarHeader,
-        "%SETTINGS%": sidebarSettings,
-        "%CACHE_CONTROLS%": sidebarCacheControls
-    }));
-    appWrapper.appendChild(buildFragment(topbarShell, {
-        "%HEADER_BRAND%": topbarHeaderBrand,
-        "%PANEL_SEARCH%": topbarPanelSearch,
-        "%PANEL_JUMP%": topbarPanelJump,
-        "%PANEL_DRAFT%": topbarPanelDraft
-    }));
-    appWrapper.appendChild(buildFragment(mainGridShell, {
-        "%LOADERS%": mainGridLoaders,
-        "%ROOT%": mainGridRoot
-    }));
-
-    const modalsFrag = buildFragment(modalShell, {
-        "%HEADER%": modalHeader
-    });
+    
+    appWrapper.appendChild(buildFragment(spriteShell, { "%ICONS%": icons.join("") }));
+    appWrapper.appendChild(buildFragment(sidebarShell, { "%HEADER%": sidebarHeader, "%SETTINGS%": sidebarSettings, "%CACHE_CONTROLS%": sidebarCacheControls }));
+    appWrapper.appendChild(buildFragment(topbarShell, { "%HEADER_BRAND%": topbarHeaderBrand, "%PANEL_SEARCH%": topbarPanelSearch, "%PANEL_JUMP%": topbarPanelJump, "%PANEL_DRAFT%": topbarPanelDraft }));
+    appWrapper.appendChild(buildFragment(mainGridShell, { "%LOADERS%": mainGridLoaders, "%ROOT%": mainGridRoot }));
+    
+    const modalsFrag = buildFragment(modalShell, { "%HEADER%": modalHeader });
     modalsFrag.getElementById("mount-details")?.appendChild(buildFragment(modalDetailsView));
-    modalsFrag.getElementById("mount-range")?.appendChild(buildFragment(modalRangeShell, {
-        "%INPUTS%": modalRangeInputs,
-        "%EXPORTS%": modalRangeExports,
-        "%PROGRESS%": modalRangeProgress
-    }));
-    modalsFrag.getElementById("mount-transform")?.appendChild(buildFragment(modalFontShell, {
-        "%CONTROLS%": modalFontControls,
-        "%RESULTS%": modalFontResults
-    }));
-    modalsFrag.getElementById("mount-bkm")?.appendChild(buildFragment(modalBkmShell, {
-        "%ACTIONS%": modalBkmActions,
-        "%TABS%": modalBkmTabs,
-        "%LISTS%": modalBkmLists
-    }));
-    modalsFrag.getElementById("mount-gsi")?.appendChild(buildFragment(modalGsiShell, {
-        "%SEARCH%": modalGsiSearch,
-        "%SORT_AREA%": modalGsiSortArea,
-        "%VIEWPORT%": modalGsiViewport
-    }));
+    modalsFrag.getElementById("mount-range")?.appendChild(buildFragment(modalRangeShell, { "%INPUTS%": modalRangeInputs, "%EXPORTS%": modalRangeExports, "%PROGRESS%": modalRangeProgress }));
+    modalsFrag.getElementById("mount-transform")?.appendChild(buildFragment(modalFontShell, { "%CONTROLS%": modalFontControls, "%RESULTS%": modalFontResults }));
+    modalsFrag.getElementById("mount-bkm")?.appendChild(buildFragment(modalBkmShell, { "%ACTIONS%": modalBkmActions, "%TABS%": modalBkmTabs, "%LISTS%": modalBkmLists }));
+    modalsFrag.getElementById("mount-gsi")?.appendChild(buildFragment(modalGsiShell, { "%SEARCH%": modalGsiSearch, "%SORT_AREA%": modalGsiSortArea, "%VIEWPORT%": modalGsiViewport }));
     appWrapper.appendChild(modalsFrag);
 
-    appWrapper.appendChild(buildFragment(filtersShell, {
-        "%HEADER%": filterHeader,
-        "%SEARCH%": filterSearch,
-        "%TABS%": filterTabs,
-        "%SHORTCUTS%": shortcutsRoot
-    }));
-    appWrapper.appendChild(buildFragment(fabShell, {
-        "%FAB_MENU%": fabMenu,
-        "%FAB_TRIGGER%": fabTrigger
-    }));
+    appWrapper.appendChild(buildFragment(filtersShell, { "%HEADER%": filterHeader, "%SEARCH%": filterSearch, "%TABS%": filterTabs, "%SHORTCUTS%": shortcutsRoot }));
+    appWrapper.appendChild(buildFragment(fabShell, { "%FAB_MENU%": fabMenu, "%FAB_TRIGGER%": fabTrigger }));
     appWrapper.appendChild(buildFragment(updateBanner + toastNotification));
 
     document.body.prepend(appWrapper);

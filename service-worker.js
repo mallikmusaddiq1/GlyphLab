@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v0.0.4";
+const CACHE_VERSION = "v0.0.5";
 const CACHE_NAME = `glyphlab-dynamic-${CACHE_VERSION}`;
 
 const SHELL_ASSETS = [
@@ -14,7 +14,7 @@ self.addEventListener("install", (event) => {
     self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(SHELL_ASSETS).catch(err => console.warn("Shell cache partial fail:", err));
+            return cache.addAll(SHELL_ASSETS).catch(err => console.warn("[SW] Install cache warning:", err));
         })
     );
 });
@@ -44,9 +44,7 @@ self.addEventListener("fetch", (event) => {
     if (req.method !== "GET" || !req.url.startsWith("http")) return;
 
     event.respondWith(
-        caches.match(req, {
-            ignoreSearch: true
-        }).then((cachedResponse) => {
+        caches.match(req, { ignoreSearch: true }).then((cachedResponse) => {
             const networkFetch = fetch(req).then((networkResponse) => {
                 if (networkResponse && networkResponse.status === 200 && networkResponse.type === "basic") {
                     const clone = networkResponse.clone();
@@ -56,7 +54,7 @@ self.addEventListener("fetch", (event) => {
             }).catch(() => {
                 return cachedResponse;
             });
-
+            
             return cachedResponse || networkFetch;
         })
     );

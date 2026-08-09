@@ -77,3 +77,25 @@ var activeFilters = new Map(),
     ast,
     isClearing = false,
     currentSearchMode = localStorage.getItem("glyphlab_search_mode") || "smart";
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("click", (e) => {
+        const actionEl = e.target.closest("[data-action]");
+        if (!actionEl) return;
+        
+        const action = actionEl.dataset.action;
+        if (action === "copy" && typeof copyText === "function") {
+            copyText(actionEl.dataset.payload, actionEl.dataset.type);
+        } else if (action === "draft" && typeof appendToDraft === "function") {
+            appendToDraft(actionEl.dataset.payload);
+        } else if (action === "details" && typeof openDetails === "function") {
+            openDetails(Number(actionEl.dataset.cp));
+        } else if (action === "combinedDetails" && typeof openCombinedDetails === "function") {
+            openCombinedDetails(actionEl.dataset.str, actionEl.dataset.name);
+        } else if (action === "toggleFilter" && typeof toggleFilter === "function") {
+            toggleFilter(actionEl.dataset.id, actionEl.dataset.name);
+        } else if (action === "closeModal" && typeof closeModals === "function") {
+            closeModals();
+        }
+    });
+});
