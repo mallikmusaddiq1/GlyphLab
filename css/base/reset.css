@@ -7,6 +7,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -35,6 +41,9 @@ body {
     flex-direction: column;
     align-items: center;
     touch-action: auto;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 input:-webkit-autofill,

@@ -1,12 +1,12 @@
 .btn {
-    padding: 4px 10px;
+    padding: 0.6em 1.2em;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
     color: var(--accent);
     border: 1px solid var(--border-subtle);
     border-radius: 8px;
     font-weight: 800;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: clamp(0.7rem, 2.5vw, 0.75rem);
     text-transform: uppercase;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     letter-spacing: 0.5px;
@@ -122,8 +122,9 @@
 
 .copy-btn {
     flex: 1;
-    padding: 8px 0;
-    font-size: 0.75rem;
+    padding: 0.5em 0;
+    font-size: clamp(0.55rem, 2.5vw, 0.75rem);
+    line-height: 1.2;
     font-weight: 800;
     cursor: pointer;
     border-radius: 6px;
@@ -169,14 +170,15 @@
 }
 
 .action-btn {
-    width: 65px;
-    height: 32px;
+    flex: 1;
+    min-height: 40px;
     flex-shrink: 0;
     padding: 0 !important;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
 }
 
 .c-btn {
