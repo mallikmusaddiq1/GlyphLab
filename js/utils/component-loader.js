@@ -11,7 +11,7 @@
     };
 
     const iconNames = [
-        "bkm", "clr", "det", "exp", "fab", "fil",
+        "bkm", "clr", "det", "exp", "fab", "fil", 
         "fnt", "gsi", "imp", "rnd", "sch", "set", "spn"
     ];
 

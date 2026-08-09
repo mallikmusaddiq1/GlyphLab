@@ -1,6 +1,6 @@
-const CACHE_VERSION = "v0.0.4",
-    CACHE_NAME = `glyphlab-cache-${CACHE_VERSION}`,
-    PRECACHE_ASSETS = [
+const CACHE_VERSION = "v0.0.3",
+      CACHE_NAME = `glyphlab-cache-${CACHE_VERSION}`,
+      PRECACHE_ASSETS = [
         "./",
         "./index.html",
         "./html/base/head-meta.html",
@@ -124,59 +124,57 @@ const CACHE_VERSION = "v0.0.4",
         "./js/services/export/png-exporter.js",
         "./js/services/export/importer.js",
         "./js/services/export/bookmark-exporter.js"
-    ];
+      ];
 
 self.addEventListener("install", (t) => {
-    t.waitUntil(
-        caches.open(CACHE_NAME).then((e) =>
-            Promise.allSettled(PRECACHE_ASSETS.map((asset) => e.add(asset).catch(() => {})))
-        )
-    );
+  t.waitUntil(
+    caches.open(CACHE_NAME).then((e) =>
+      Promise.allSettled(PRECACHE_ASSETS.map((asset) => e.add(asset).catch(() => {})))
+    )
+  );
 });
 
 self.addEventListener("activate", (t) => {
-    t.waitUntil(
-        Promise.all([
-            self.clients.claim(),
-            caches.keys().then((keys) =>
-                Promise.all(
-                    keys.map((key) => {
-                        if (key !== CACHE_NAME) return caches.delete(key);
-                    })
-                )
-            )
-        ])
-    );
+  t.waitUntil(
+    Promise.all([
+      self.clients.claim(),
+      caches.keys().then((keys) =>
+        Promise.all(
+          keys.map((key) => {
+            if (key !== CACHE_NAME) return caches.delete(key);
+          })
+        )
+      )
+    ])
+  );
 });
 
 self.addEventListener("message", (event) => {
-    if (event.data === "SKIP_WAITING" || (event.data && event.data.type === "SKIP_WAITING")) {
-        self.skipWaiting();
-    }
+  if (event.data === "SKIP_WAITING" || (event.data && event.data.type === "SKIP_WAITING")) {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("fetch", (t) => {
-    if ("GET" !== t.request.method) return;
-    const url = new URL(t.request.url);
+  if ("GET" !== t.request.method) return;
+  const url = new URL(t.request.url);
+  
+  if (url.pathname.endsWith("service-worker.js") || !url.protocol.startsWith("http")) {
+    return;
+  }
 
-    if (url.pathname.endsWith("service-worker.js") || !url.protocol.startsWith("http")) {
-        return;
-    }
-
-    t.respondWith(
-        caches.match(t.request, {
-            ignoreSearch: true
-        }).then((e) =>
-            e ||
-            fetch(t.request)
-            .then((res) => {
-                if (res && 200 === res.status) {
-                    const s = res.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(t.request, s)).catch(() => {});
-                }
-                return res;
-            })
-            .catch(() => {})
-        )
-    );
+  t.respondWith(
+    caches.match(t.request, { ignoreSearch: true }).then((e) =>
+      e ||
+      fetch(t.request)
+        .then((res) => {
+          if (res && 200 === res.status) {
+            const s = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(t.request, s)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => {})
+    )
+  );
 });
