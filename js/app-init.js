@@ -35,7 +35,9 @@ window.swUpdateAvailable = false;
 
 window.getCurrentSWVersion = async function() {
     try {
-        let res = await fetch("./service-worker.js", { cache: "no-cache" });
+        let res = await fetch("./service-worker.js", {
+            cache: "no-cache"
+        });
         if (res.ok) {
             let text = await res.text();
             let match = text.match(/CACHE_VERSION\s*=\s*["']([^"']+)["']/);
@@ -143,7 +145,7 @@ window.onload = async () => {
     }
 
     const toggles = ["hideUnrendered", "liveUpdateCheck", "wrapSearchCheck", "wrapDraftCheck", "wrapFontCheck", "expandFontCheck"];
-    
+
     toggles.forEach(id => {
         let el = document.getElementById(id);
         if (el) {
@@ -181,7 +183,9 @@ window.onload = async () => {
         if (e) {
             fontCategories = e.fonts || {};
             setTimeout(() => {
-                let d = new Intl.Segmenter(void 0, { granularity: "grapheme" }),
+                let d = new Intl.Segmenter(void 0, {
+                        granularity: "grapheme"
+                    }),
                     u = x => x ? Array.from(d.segment(String.fromCodePoint(...x))).map(s => s.segment) : [];
                 for (let [g, h] of Object.entries(fontCategories)) {
                     for (let [f, v] of Object.entries(h)) {
@@ -213,7 +217,10 @@ window.onload = async () => {
                             let formattedName = groupData[k].toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
                             COMBINED_CHARS[cStr] = formattedName;
                             COMBINED_CAT_MAP[cStr] = g;
-                            charGroup.push({ str: cStr, name: formattedName });
+                            charGroup.push({
+                                str: cStr,
+                                name: formattedName
+                            });
                         });
                     }
                     a[g] = charGroup;
@@ -407,7 +414,9 @@ if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", () => {
         navigator.serviceWorker
-            .register("./service-worker.js", { updateViaCache: "none" })
+            .register("./service-worker.js", {
+                updateViaCache: "none"
+            })
             .then(reg => {
                 window.newWorkerRegistration = reg;
 
@@ -450,14 +459,20 @@ document.addEventListener("DOMContentLoaded", () => {
             if (tE.innerText.includes("!")) {
                 tE.innerText = tE.innerText.replace(/!/g, "");
             }
-        }).observe(tE, { childList: !0, characterData: !0, subtree: !0 });
+        }).observe(tE, {
+            childList: !0,
+            characterData: !0,
+            subtree: !0
+        });
     }
 });
 
 window.getRawSearchCardClass = function(r, e) {
     if (!e || "string" != typeof r) return "";
     try {
-        let t = Array.from(new Intl.Segmenter(void 0, { granularity: "grapheme" }).segment(e.trim())).map(r => r.segment),
+        let t = Array.from(new Intl.Segmenter(void 0, {
+                granularity: "grapheme"
+            }).segment(e.trim())).map(r => r.segment),
             n = t.filter(r => Array.from(r).length > 1),
             a = t.filter(r => 1 === Array.from(r).length),
             o = n.flatMap(r => Array.from(r)),
