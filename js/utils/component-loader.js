@@ -1,115 +1,78 @@
 (async function initGlyphLab() {
-    const load = async (path) => {
+    const loadHTML = async (path) => {
         try {
             const res = await fetch(path);
             if (!res.ok) throw new Error(res.statusText);
             return await res.text();
         } catch (err) {
-            console.error(`Error loading ${path}:`, err);
+            console.error(`Component Load Error (${path}):`, err);
             return "";
         }
     };
 
-    const iconNames = [
-        "bkm", "clr", "det", "exp", "fab", "fil",
-        "fnt", "gsi", "imp", "rnd", "sch", "set", "spn"
-    ];
+    const iconNames = ["bkm", "clr", "det", "exp", "fab", "fil", "fnt", "gsi", "imp", "rnd", "sch", "set", "spn"];
+
+    const components = await Promise.all([
+        loadHTML("./html/base/head-meta.html"),
+        loadHTML("./html/svg/sprite-shell.html"),
+        loadHTML("./html/layout/main-grid/shell.html"),
+        loadHTML("./html/layout/main-grid/loaders.html"),
+        loadHTML("./html/layout/main-grid/root.html"),
+        loadHTML("./html/layout/sidebar/shell.html"),
+        loadHTML("./html/layout/sidebar/header.html"),
+        loadHTML("./html/layout/sidebar/settings.html"),
+        loadHTML("./html/layout/sidebar/cache-controls.html"),
+        loadHTML("./html/layout/topbar/shell.html"),
+        loadHTML("./html/layout/topbar/header-brand.html"),
+        loadHTML("./html/layout/topbar/panels/search.html"),
+        loadHTML("./html/layout/topbar/panels/jump.html"),
+        loadHTML("./html/layout/topbar/panels/draft.html"),
+        loadHTML("./html/modals/header.html"),
+        loadHTML("./html/modals/shell.html"),
+        loadHTML("./html/modals/bookmarks/actions.html"),
+        loadHTML("./html/modals/bookmarks/tabs.html"),
+        loadHTML("./html/modals/bookmarks/lists.html"),
+        loadHTML("./html/modals/bookmarks/shell.html"),
+        loadHTML("./html/modals/details/view.html"),
+        loadHTML("./html/modals/fonts/controls.html"),
+        loadHTML("./html/modals/fonts/results.html"),
+        loadHTML("./html/modals/fonts/shell.html"),
+        loadHTML("./html/modals/gsi/search.html"),
+        loadHTML("./html/modals/gsi/sort-area.html"),
+        loadHTML("./html/modals/gsi/viewport.html"),
+        loadHTML("./html/modals/gsi/shell.html"),
+        loadHTML("./html/modals/range/inputs.html"),
+        loadHTML("./html/modals/range/exports.html"),
+        loadHTML("./html/modals/range/progress.html"),
+        loadHTML("./html/modals/range/shell.html"),
+        loadHTML("./html/features/alerts/update-banner.html"),
+        loadHTML("./html/features/alerts/toast-notification.html"),
+        loadHTML("./html/features/fab/shell.html"),
+        loadHTML("./html/features/fab/menu.html"),
+        loadHTML("./html/features/fab/trigger.html"),
+        loadHTML("./html/features/filters/shell.html"),
+        loadHTML("./html/features/filters/header.html"),
+        loadHTML("./html/features/filters/search.html"),
+        loadHTML("./html/features/filters/tabs.html"),
+        loadHTML("./html/features/filters/shortcuts-root.html"),
+        loadHTML("./css/templates/export.css"),
+        loadHTML("./html/templates/export/header.html"),
+        loadHTML("./html/templates/export/footer.html"),
+        ...iconNames.map(name => loadHTML(`./html/svg/icons/${name}.html`))
+    ]);
 
     const [
-        headMeta,
-        spriteShell,
-        mainGridShell,
-        mainGridLoaders,
-        mainGridRoot,
-        sidebarShell,
-        sidebarHeader,
-        sidebarSettings,
-        sidebarCacheControls,
-        topbarShell,
-        topbarHeaderBrand,
-        topbarPanelSearch,
-        topbarPanelJump,
-        topbarPanelDraft,
-        modalHeader,
-        modalShell,
-        modalBkmActions,
-        modalBkmTabs,
-        modalBkmLists,
-        modalBkmShell,
-        modalDetailsView,
-        modalFontControls,
-        modalFontResults,
-        modalFontShell,
-        modalGsiSearch,
-        modalGsiSortArea,
-        modalGsiViewport,
-        modalGsiShell,
-        modalRangeInputs,
-        modalRangeExports,
-        modalRangeProgress,
-        modalRangeShell,
-        updateBanner,
-        toastNotification,
-        fabShell,
-        fabMenu,
-        fabTrigger,
-        filtersShell,
-        filterHeader,
-        filterSearch,
-        filterTabs,
-        shortcutsRoot,
-        exportCss,
-        exportHeader,
-        exportFooter,
-        ...icons
-    ] = await Promise.all([
-        load("./html/base/head-meta.html"),
-        load("./html/svg/sprite-shell.html"),
-        load("./html/layout/main-grid/shell.html"),
-        load("./html/layout/main-grid/loaders.html"),
-        load("./html/layout/main-grid/root.html"),
-        load("./html/layout/sidebar/shell.html"),
-        load("./html/layout/sidebar/header.html"),
-        load("./html/layout/sidebar/settings.html"),
-        load("./html/layout/sidebar/cache-controls.html"),
-        load("./html/layout/topbar/shell.html"),
-        load("./html/layout/topbar/header-brand.html"),
-        load("./html/layout/topbar/panels/search.html"),
-        load("./html/layout/topbar/panels/jump.html"),
-        load("./html/layout/topbar/panels/draft.html"),
-        load("./html/modals/header.html"),
-        load("./html/modals/shell.html"),
-        load("./html/modals/bookmarks/actions.html"),
-        load("./html/modals/bookmarks/tabs.html"),
-        load("./html/modals/bookmarks/lists.html"),
-        load("./html/modals/bookmarks/shell.html"),
-        load("./html/modals/details/view.html"),
-        load("./html/modals/fonts/controls.html"),
-        load("./html/modals/fonts/results.html"),
-        load("./html/modals/fonts/shell.html"),
-        load("./html/modals/gsi/search.html"),
-        load("./html/modals/gsi/sort-area.html"),
-        load("./html/modals/gsi/viewport.html"),
-        load("./html/modals/gsi/shell.html"),
-        load("./html/modals/range/inputs.html"),
-        load("./html/modals/range/exports.html"),
-        load("./html/modals/range/progress.html"),
-        load("./html/modals/range/shell.html"),
-        load("./html/features/alerts/update-banner.html"),
-        load("./html/features/alerts/toast-notification.html"),
-        load("./html/features/fab/shell.html"),
-        load("./html/features/fab/menu.html"),
-        load("./html/features/fab/trigger.html"),
-        load("./html/features/filters/shell.html"),
-        load("./html/features/filters/header.html"),
-        load("./html/features/filters/search.html"),
-        load("./html/features/filters/tabs.html"),
-        load("./html/features/filters/shortcuts-root.html"),
-        load("./css/templates/export.css"),
-        load("./html/templates/export/header.html"),
-        load("./html/templates/export/footer.html"),
-        ...iconNames.map(name => load(`./html/svg/icons/${name}.html`))
-    ]);
+        headMeta, spriteShell, mainGridShell, mainGridLoaders, mainGridRoot,
+        sidebarShell, sidebarHeader, sidebarSettings, sidebarCacheControls,
+        topbarShell, topbarHeaderBrand, topbarPanelSearch, topbarPanelJump, topbarPanelDraft,
+        modalHeader, modalShell, modalBkmActions, modalBkmTabs, modalBkmLists, modalBkmShell,
+        modalDetailsView, modalFontControls, modalFontResults, modalFontShell,
+        modalGsiSearch, modalGsiSortArea, modalGsiViewport, modalGsiShell,
+        modalRangeInputs, modalRangeExports, modalRangeProgress, modalRangeShell,
+        updateBanner, toastNotification, fabShell, fabMenu, fabTrigger,
+        filtersShell, filterHeader, filterSearch, filterTabs, shortcutsRoot,
+        exportCss, exportHeader, exportFooter, ...icons
+    ] = components;
 
     window.EXPORT_TEMPLATES = {
         css: exportCss,
@@ -117,78 +80,95 @@
         footer: exportFooter
     };
 
-    const fullSprite = spriteShell.replace("%ICONS%", () => icons.join(""));
-    const fullMainGrid = mainGridShell.replace("%LOADERS%", () => mainGridLoaders).replace("%ROOT%", () => mainGridRoot);
-    const fullSidebar = sidebarShell
-        .replace("%HEADER%", () => sidebarHeader)
-        .replace("%SETTINGS%", () => sidebarSettings)
-        .replace("%CACHE_CONTROLS%", () => sidebarCacheControls);
+    const domParser = new DOMParser();
 
-    const fullTopbar = topbarShell
-        .replace("%HEADER_BRAND%", () => topbarHeaderBrand)
-        .replace("%PANEL_SEARCH%", () => topbarPanelSearch)
-        .replace("%PANEL_JUMP%", () => topbarPanelJump)
-        .replace("%PANEL_DRAFT%", () => topbarPanelDraft);
+    const buildFragment = (templateStr, replacements = {}) => {
+        let parsedStr = templateStr;
+        for (let [key, value] of Object.entries(replacements)) {
+            parsedStr = parsedStr.split(key).join(value);
+        }
+        const doc = domParser.parseFromString(parsedStr, 'text/html');
+        const frag = document.createDocumentFragment();
+        Array.from(doc.body.childNodes).forEach(node => frag.appendChild(node));
+        return frag;
+    };
 
-    const fullBkmModal = modalBkmShell
-        .replace("%ACTIONS%", () => modalBkmActions)
-        .replace("%TABS%", () => modalBkmTabs)
-        .replace("%LISTS%", () => modalBkmLists);
+    document.head.appendChild(buildFragment(headMeta));
 
-    const fullFontModal = modalFontShell
-        .replace("%CONTROLS%", () => modalFontControls)
-        .replace("%RESULTS%", () => modalFontResults);
+    const appWrapper = document.createDocumentFragment();
 
-    const fullGsiModal = modalGsiShell
-        .replace("%SEARCH%", () => modalGsiSearch)
-        .replace("%SORT_AREA%", () => modalGsiSortArea)
-        .replace("%VIEWPORT%", () => modalGsiViewport);
+    appWrapper.appendChild(buildFragment(spriteShell, {
+        "%ICONS%": icons.join("")
+    }));
+    appWrapper.appendChild(buildFragment(sidebarShell, {
+        "%HEADER%": sidebarHeader,
+        "%SETTINGS%": sidebarSettings,
+        "%CACHE_CONTROLS%": sidebarCacheControls
+    }));
+    appWrapper.appendChild(buildFragment(topbarShell, {
+        "%HEADER_BRAND%": topbarHeaderBrand,
+        "%PANEL_SEARCH%": topbarPanelSearch,
+        "%PANEL_JUMP%": topbarPanelJump,
+        "%PANEL_DRAFT%": topbarPanelDraft
+    }));
+    appWrapper.appendChild(buildFragment(mainGridShell, {
+        "%LOADERS%": mainGridLoaders,
+        "%ROOT%": mainGridRoot
+    }));
 
-    const fullRangeModal = modalRangeShell
-        .replace("%INPUTS%", () => modalRangeInputs)
-        .replace("%EXPORTS%", () => modalRangeExports)
-        .replace("%PROGRESS%", () => modalRangeProgress);
+    const modalsFrag = buildFragment(modalShell, {
+        "%HEADER%": modalHeader
+    });
+    modalsFrag.getElementById("mount-details")?.appendChild(buildFragment(modalDetailsView));
+    modalsFrag.getElementById("mount-range")?.appendChild(buildFragment(modalRangeShell, {
+        "%INPUTS%": modalRangeInputs,
+        "%EXPORTS%": modalRangeExports,
+        "%PROGRESS%": modalRangeProgress
+    }));
+    modalsFrag.getElementById("mount-transform")?.appendChild(buildFragment(modalFontShell, {
+        "%CONTROLS%": modalFontControls,
+        "%RESULTS%": modalFontResults
+    }));
+    modalsFrag.getElementById("mount-bkm")?.appendChild(buildFragment(modalBkmShell, {
+        "%ACTIONS%": modalBkmActions,
+        "%TABS%": modalBkmTabs,
+        "%LISTS%": modalBkmLists
+    }));
+    modalsFrag.getElementById("mount-gsi")?.appendChild(buildFragment(modalGsiShell, {
+        "%SEARCH%": modalGsiSearch,
+        "%SORT_AREA%": modalGsiSortArea,
+        "%VIEWPORT%": modalGsiViewport
+    }));
+    appWrapper.appendChild(modalsFrag);
 
-    const mountedModal = modalShell
-        .replace("%HEADER%", () => modalHeader)
-        .replace('<div id="mount-details"></div>', () => modalDetailsView)
-        .replace('<div id="mount-range"></div>', () => fullRangeModal)
-        .replace('<div id="mount-transform"></div>', () => fullFontModal)
-        .replace('<div id="mount-bkm"></div>', () => fullBkmModal)
-        .replace('<div id="mount-gsi"></div>', () => fullGsiModal);
+    appWrapper.appendChild(buildFragment(filtersShell, {
+        "%HEADER%": filterHeader,
+        "%SEARCH%": filterSearch,
+        "%TABS%": filterTabs,
+        "%SHORTCUTS%": shortcutsRoot
+    }));
+    appWrapper.appendChild(buildFragment(fabShell, {
+        "%FAB_MENU%": fabMenu,
+        "%FAB_TRIGGER%": fabTrigger
+    }));
+    appWrapper.appendChild(buildFragment(updateBanner + toastNotification));
 
-    const fullFab = fabShell
-        .replace("%FAB_MENU%", () => fabMenu)
-        .replace("%FAB_TRIGGER%", () => fabTrigger);
+    document.body.prepend(appWrapper);
 
-    const fullFilters = filtersShell
-        .replace("%HEADER%", () => filterHeader)
-        .replace("%SEARCH%", () => filterSearch)
-        .replace("%TABS%", () => filterTabs)
-        .replace("%SHORTCUTS%", () => shortcutsRoot);
+    const scriptsHTML = await loadHTML("./html/base/scripts.html");
+    const scriptDoc = domParser.parseFromString(scriptsHTML, "text/html");
+    const scriptTags = Array.from(scriptDoc.querySelectorAll("script"));
 
-    const fullAlerts = updateBanner + toastNotification;
-    const fullHTML = fullSprite + fullSidebar + fullTopbar + fullMainGrid + mountedModal + fullFilters + fullFab + fullAlerts;
-
-    document.head.insertAdjacentHTML("afterbegin", headMeta);
-    document.body.insertAdjacentHTML("afterbegin", fullHTML);
-
-    const scriptsHTML = await load("./html/base/scripts.html");
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(scriptsHTML, "text/html");
-    const scripts = Array.from(doc.querySelectorAll("script"));
-    const totalScripts = scripts.length;
     let loadedCount = 0;
-
     const checkDone = () => {
-        if (++loadedCount === totalScripts) {
+        if (++loadedCount === scriptTags.length) {
             document.dispatchEvent(new Event("DOMContentLoaded"));
             window.dispatchEvent(new Event("load"));
         }
     };
 
-    if (totalScripts !== 0) {
-        scripts.forEach(oldScript => {
+    if (scriptTags.length !== 0) {
+        scriptTags.forEach(oldScript => {
             const newScript = document.createElement("script");
             if (oldScript.src) {
                 newScript.src = oldScript.src;
@@ -203,7 +183,6 @@
             }
         });
     } else {
-        document.dispatchEvent(new Event("DOMContentLoaded"));
-        window.dispatchEvent(new Event("load"));
+        checkDone();
     }
 })();
