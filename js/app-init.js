@@ -1,4 +1,4 @@
-window.finishSearchJump = e => {
+window.finishSearchJump = (e) => {
     let t = defaultCardsToLoad - e,
         f = () => {
             if ("function" == typeof loadPrev) loadPrev();
@@ -12,7 +12,7 @@ window.finishSearchJump = e => {
     }
 };
 
-window.switchToolbarTab = t => {
+window.switchToolbarTab = (t) => {
     window.currentToolbarTab = t;
     if (panelToolSearch) panelToolSearch.style.display = "search" === t ? "block" : "none";
     if (panelToolJump) panelToolJump.style.display = "jump" === t ? "block" : "none";
@@ -22,7 +22,7 @@ window.switchToolbarTab = t => {
     if (tabToolDraft) tabToolDraft.classList.toggle("active", "draft" === t);
 };
 
-window.setSearchMode = e => {
+window.setSearchMode = (e) => {
     currentSearchMode = e;
     localStorage.setItem("glyphlab_search_mode", e);
     if (btnSmartSearch) btnSmartSearch.classList.toggle("active", "smart" === e);
@@ -51,14 +51,12 @@ window.renderUpdateUI = async function() {
     let ver = await window.getCurrentSWVersion();
     let tableCurrentVer = document.getElementById("tableCurrentVer");
     if (tableCurrentVer) tableCurrentVer.innerText = ver;
-
     let redDot = document.getElementById("updateRedDot");
     let btn = document.getElementById("btnUpdateAction");
     let title = document.getElementById("sidebarUpdateTitle");
     let tableVerLabel = document.getElementById("tableVerLabel");
-
+    
     if (title) title.innerText = "UPDATE STATUS";
-
     if (window.swUpdateAvailable) {
         if (redDot) redDot.style.display = "inline-block";
         if (tableVerLabel) tableVerLabel.innerText = "UPDATE AVAILABLE";
@@ -82,32 +80,26 @@ window.renderUpdateUI = async function() {
 
 window.handleUpdateClick = async function() {
     let btn = document.getElementById("btnUpdateAction");
-
     if (window.swUpdateAvailable) {
         if (btn) btn.innerText = "UPDATING...";
-
         let reg = window.newWorkerRegistration;
         if (reg && reg.waiting) {
             reg.waiting.postMessage("SKIP_WAITING");
         } else if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage("SKIP_WAITING");
         }
-
         setTimeout(() => {
             window.location.reload(true);
         }, 300);
-
     } else {
         if (btn) {
             btn.innerText = "CHECKING...";
             btn.disabled = true;
         }
-
         try {
             if (window.newWorkerRegistration) {
                 await window.newWorkerRegistration.update();
             }
-
             let reg = window.newWorkerRegistration;
             if (reg && (reg.waiting || reg.installing)) {
                 window.swUpdateAvailable = true;
@@ -129,13 +121,13 @@ window.onload = async () => {
     let initialLoaderEl = document.getElementById("initialLoadingMsg");
     try {
         let t = await localforage.getItem("GLYPH_AUTO");
-        let hasFilters = !1;
+        let hasFilters = false;
         if (t) {
             let a = JSON.parse(t);
             if (a.f) {
                 let parsedF = JSON.parse(a.f);
                 if (parsedF && (parsedF.length > 0 || Object.keys(parsedF).length > 0)) {
-                    hasFilters = !0;
+                    hasFilters = true;
                 }
             }
         }
@@ -143,9 +135,9 @@ window.onload = async () => {
     } catch (e) {
         if (initialLoaderEl) initialLoaderEl.style.display = "flex";
     }
-
+    
     const toggles = ["hideUnrendered", "liveUpdateCheck", "wrapSearchCheck", "wrapDraftCheck", "wrapFontCheck", "expandFontCheck"];
-
+    
     toggles.forEach(id => {
         let el = document.getElementById(id);
         if (el) {
@@ -157,7 +149,7 @@ window.onload = async () => {
             if (id === "expandFontCheck" && transformContent) transformContent.classList.toggle("font-grid-expanded", el.checked);
         }
     });
-
+    
     toggles.forEach(id => {
         let el = document.getElementById(id);
         if (el) {
@@ -171,14 +163,14 @@ window.onload = async () => {
             });
         }
     });
-
+    
     try {
         let e = await localforage.getItem("GLYPH_BKM");
         if (e) bookmarks = new Set(e);
     } catch (e) {}
-
+    
     setSearchMode(currentSearchMode);
-
+    
     let pData = gCD("./data/datasets.json").then(async e => {
         if (e) {
             fontCategories = e.fonts || {};
@@ -196,12 +188,12 @@ window.onload = async () => {
                 }
                 if ((tInput.value || fontSearch.value) && "function" == typeof renderTransform) renderTransform();
             }, 50);
-
+            
             U_BLOCKS = e.filters ? (e.filters.U_BLOCKS || e.filters) : [];
             if (e.GENERAL_CATEGORY) window.GC_DATA = e.GENERAL_CATEGORY;
             if ("function" == typeof initCategories) initCategories();
             if (categorySearch.value && "function" == typeof filterCategories) filterCategories();
-
+            
             if (e.combined) {
                 let a = {};
                 let chunkKeys = Object.keys(e.combined);
@@ -231,9 +223,9 @@ window.onload = async () => {
             }
         }
     }).catch(() => {});
-
+    
     window.loadUnicodeData();
-
+    
     pData.then(() => {
         localforage.getItem("GLYPH_AUTO").then(t => {
             let uP = new URLSearchParams(window.location.search),
@@ -244,11 +236,12 @@ window.onload = async () => {
                 uS_old = uP.get("search"),
                 uS = uS_smart || uS_raw || uS_old,
                 uN = !!(uH || uD || uS);
-
+                
             if (t) try {
                 let a = JSON.parse(t),
-                    r = !1,
+                    r = false,
                     cJ = !uN && !activeFilters.size && (!a.i || !a.i.charInput);
+                    
                 if (a.v) {
                     if (a.v.tab) currentBkmTab = a.v.tab;
                     if (a.v.filterTab) currentFilterTab = a.v.filterTab;
@@ -262,7 +255,7 @@ window.onload = async () => {
                             if (null !== e) {
                                 jumpHex.value = toH(e).padStart(4, "0");
                                 jumpDec.value = e.toString(10);
-                                r = !1;
+                                r = false;
                             }
                         }
                     } else if (a.v.hex && cJ) {
@@ -270,12 +263,14 @@ window.onload = async () => {
                         let e = parseInt(a.v.hex, 16);
                         if (!isNaN(e)) {
                             jumpDec.value = e.toString(10);
-                            r = !0;
+                            r = true;
                         }
                     }
                 }
+                
                 if ("function" == typeof switchFilterTab) switchFilterTab(currentFilterTab);
                 window.PENDING_FCAT_SCROLLS = {};
+                
                 if (a.s) {
                     APP_S = a.s;
                     if (a.s["modal-box"]) window.PENDING_MODAL_SCROLL = a.s["modal-box"].t;
@@ -285,17 +280,19 @@ window.onload = async () => {
                         }
                     }
                 }
+                
                 document.querySelectorAll("input, textarea, select").forEach((e, t) => {
                     let i = e.id || "inp_" + t;
                     if (["hideUnrendered", "liveUpdateCheck", "wrapSearchCheck", "wrapDraftCheck", "wrapFontCheck", "expandFontCheck", "desktopSiteCheck"].includes(e.id)) return;
                     if (void 0 !== a.i[i]) {
-                        if ("charInput" === e.id && uS || r && ("jumpHex" === e.id || "jumpDec" === e.id)) {
+                        if (("charInput" === e.id && uS) || (r && ("jumpHex" === e.id || "jumpDec" === e.id))) {
                             return;
                         }
                         if ("checkbox" === e.type) e.checked = a.i[i];
                         else e.value = a.i[i];
                     }
                 });
+                
                 if (a.ui) {
                     for (let e in a.ui) {
                         let t = $(e);
@@ -308,13 +305,24 @@ window.onload = async () => {
                         uniModalTitle.innerHTML = a.ui.uniModalTitle.t;
                         uniModalTitle.style.color = a.ui.uniModalTitle.c;
                     }
-                    if (a.ui.toolbarCollapsible && "flex" === a.ui.toolbarCollapsible.d) {
+                    
+                    // Perfect Toolbar Toggle Button Text Restoration
+                    if (a.ui.toolbarCollapsible) {
                         let e = $("toolbarToggleBtn");
-                        if (e) e.innerHTML = " ";
+                        if (e) {
+                            if ("flex" === a.ui.toolbarCollapsible.d) {
+                                e.innerHTML = "\u25B2";
+                                e.setAttribute("aria-expanded", "true");
+                            } else {
+                                e.innerHTML = "\u25BC";
+                                e.setAttribute("aria-expanded", "false");
+                            }
+                        }
                     }
                 }
+                
                 if (a.f) activeFilters = new Map(JSON.parse(a.f));
-
+                
                 window.RS = () => {
                     if (APP_S) {
                         ["shortcutsContainer", "filtersMenu", "transformContent", "gsiScrollContainer"].forEach(e => {
@@ -327,8 +335,9 @@ window.onload = async () => {
                     }
                     if ("function" == typeof updateGridMetrics) updateGridMetrics();
                 };
+                
                 [50, 300, 800].forEach(d => setTimeout(window.RS, d));
-
+                
                 if (a.ui && a.ui.unifiedModal && a.ui.unifiedModal.c.includes("show")) {
                     if (a.ui.rangeWrapper && "block" === a.ui.rangeWrapper.d && "function" == typeof openRangeModal) setTimeout(openRangeModal, 50);
                     else if (a.ui.bkmWrapper && "block" === a.ui.bkmWrapper.d && "function" == typeof openBkm) setTimeout(openBkm, 50);
@@ -340,18 +349,18 @@ window.onload = async () => {
                     }
                 }
             } catch (e) {}
-
-            window.isAppReady = !0;
+            
+            window.isAppReady = true;
             if ("function" == typeof updateGsiUI) updateGsiUI();
             if ("function" == typeof renderActiveFilters) renderActiveFilters();
-
+            
             let doSearch = () => {
                 if ("function" == typeof window.findChar) {
                     if ("smart" === currentSearchMode) setTimeout(window.findChar, 800);
                     else window.findChar();
                 }
             };
-
+            
             if (uN) {
                 if (uS_smart) {
                     closeModals();
@@ -376,25 +385,25 @@ window.onload = async () => {
                 }
             } else if (charInput.value) {
                 doSearch();
-            } else if (0 < activeFilters.size) {
+            } else if (activeFilters.size > 0) {
                 if ("function" == typeof reloadFilters) reloadFilters();
             } else {
                 if (!jumpHex.value) jumpHex.value = "0021";
                 if ("function" == typeof window.jumpToHex) window.jumpToHex();
             }
-
+            
             if (initialLoaderEl) initialLoaderEl.style.display = "none";
-
+            
             let _t = 0;
             document.addEventListener("touchend", e => {
-                var a = (new Date).getTime();
+                var a = new Date().getTime();
                 if (a - _t <= 300) e.preventDefault();
                 _t = a;
-            }, !1);
-
+            }, false);
+            
             window.renderUpdateUI();
         }).catch(() => {
-            window.isAppReady = !0;
+            window.isAppReady = true;
             if (initialLoaderEl) initialLoaderEl.style.display = "none";
             window.renderUpdateUI();
         });
@@ -404,31 +413,24 @@ window.onload = async () => {
 if ("serviceWorker" in navigator) {
     let refreshing = false;
     let hadController = !!navigator.serviceWorker.controller;
-
     navigator.serviceWorker.addEventListener("controllerchange", () => {
         if (hadController && !refreshing) {
             refreshing = true;
             window.location.reload(true);
         }
     });
-
     window.addEventListener("load", () => {
         navigator.serviceWorker
-            .register("./service-worker.js", {
-                updateViaCache: "none"
-            })
+            .register("./service-worker.js", { updateViaCache: "none" })
             .then(reg => {
                 window.newWorkerRegistration = reg;
-
                 let onUpdateFound = async () => {
                     window.swUpdateAvailable = true;
                     await window.renderUpdateUI();
                 };
-
                 if (reg.waiting && navigator.serviceWorker.controller) {
                     onUpdateFound();
                 }
-
                 reg.addEventListener("updatefound", () => {
                     let newWorker = reg.installing;
                     if (newWorker) {
@@ -439,7 +441,6 @@ if ("serviceWorker" in navigator) {
                         });
                     }
                 });
-
                 window.renderUpdateUI();
             })
             .catch(err => console.warn("SW Registration Error:", err));
@@ -459,20 +460,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (tE.innerText.includes("!")) {
                 tE.innerText = tE.innerText.replace(/!/g, "");
             }
-        }).observe(tE, {
-            childList: !0,
-            characterData: !0,
-            subtree: !0
-        });
+        }).observe(tE, { childList: true, characterData: true, subtree: true });
     }
 });
 
 window.getRawSearchCardClass = function(r, e) {
     if (!e || "string" != typeof r) return "";
     try {
-        let t = Array.from(new Intl.Segmenter(void 0, {
-                granularity: "grapheme"
-            }).segment(e.trim())).map(r => r.segment),
+        let t = Array.from(new Intl.Segmenter(void 0, { granularity: "grapheme" }).segment(e.trim())).map(r => r.segment),
             n = t.filter(r => Array.from(r).length > 1),
             a = t.filter(r => 1 === Array.from(r).length),
             o = n.flatMap(r => Array.from(r)),

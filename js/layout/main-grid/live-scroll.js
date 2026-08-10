@@ -1,64 +1,116 @@
-var scrollTicking = !1;
-if (scrollArea) {
-    scrollArea.addEventListener("scroll", () => {
-        scrollTicking || (window.requestAnimationFrame(() => {
-            let isJmp = typeof isJumping !== "undefined" ? isJumping : !1;
-            !isJmp && scrollArea.scrollTop < 300 && 33 < currentTopHex && !isFetching && window.loadPrev && window.loadPrev(), window.renderVirtualGrid && window.renderVirtualGrid(), scrollTicking = !1
-        }), scrollTicking = !0)
-    }, {
-        passive: !0
-    })
-};
+var scrollTicking = false;
+
+function initLiveScroll() {
+    var sa = document.getElementById("scrollArea") || window.scrollArea;
+    if (sa) {
+        sa.addEventListener("scroll", () => {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    let isJmp = typeof isJumping !== "undefined" ? isJumping : false;
+                    
+                    if (!isJmp && sa.scrollTop < 600 && currentTopHex > 33 && !isFetching) {
+                        if (typeof window.loadPrev === "function") window.loadPrev();
+                    }
+                    
+                    if (typeof window.renderVirtualGrid === "function") window.renderVirtualGrid();
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+    }
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLiveScroll);
+} else {
+    initLiveScroll();
+}
+
 window.loadPrev = async function() {
-    if (isFilterMode || isFetching) return;
-    isFetching = !0;
-    var e = 0,
-        t = [];
-    while (t.length < 4 * gridCols && currentTopHex > 33 && e < 5000) {
+    if ((typeof isFilterMode !== "undefined" && isFilterMode) || (typeof isFetching !== "undefined" && isFetching)) return;
+    
+    isFetching = true;
+    var limitCount = 0;
+    var itemsAdded = [];
+    var targetCount = 6 * gridCols; 
+    var sa = document.getElementById("scrollArea") || window.scrollArea;
+    
+    while (itemsAdded.length < targetCount && currentTopHex > 33 && limitCount < 5000) {
         var chunk = [];
         for (var i = 1; i <= 100 && (currentTopHex - i) >= 33; i++) {
-            if (!visibilityCache.has(currentTopHex - i)) chunk.push(currentTopHex - i)
-        }
-        if (chunk.length > 0) await getVisibilityBulk(chunk);
-        for (var i = 0; i < 100; i++) {
-            if (t.length >= 4 * gridCols || currentTopHex <= 33) break;
-            var h = --currentTopHex,
-                v = visibilityCache.get(h) || isVisible(h);
-            if (!(hideCheckbox && hideCheckbox.checked && v === 3)) {
-                t.push({
-                    type: "cp",
-                    cp: h
-                })
+            if (!visibilityCache.has(currentTopHex - i)) {
+                chunk.push(currentTopHex - i);
             }
-            e++
+        }
+        
+        if (chunk.length > 0 && typeof getVisibilityBulk === "function") {
+            await getVisibilityBulk(chunk);
+        }
+        
+        for (var i = 0; i < 100; i++) {
+            if (itemsAdded.length >= targetCount || currentTopHex <= 33) break;
+            var hexVal = --currentTopHex;
+            var vStat = visibilityCache.get(hexVal) || (typeof isVisible === 'function' ? isVisible(hexVal) : 1);
+            
+            var hideCb = document.getElementById("hideUnrendered") || window.hideCheckbox;
+            if (!(hideCb && hideCb.checked && vStat === 3)) {
+                itemsAdded.push({ type: "cp", cp: hexVal });
+            }
+            limitCount++;
         }
     }
-    if (t.length > 0) {
-        t.reverse();
-        while (t.length % gridCols !== 0 && currentTopHex > 33 && e < 6000) {
-            var h = --currentTopHex,
-                v = visibilityCache.get(h) || isVisible(h);
-            if (!(hideCheckbox && hideCheckbox.checked && v === 3)) t.unshift({
-                type: "cp",
-                cp: h
-            });
-            e++
+    
+    if (itemsAdded.length > 0) {
+        itemsAdded.reverse();
+        
+        while (itemsAdded.length % gridCols !== 0 && currentTopHex > 33 && limitCount < 6000) {
+            var hexVal = --currentTopHex;
+            var vStat = visibilityCache.get(hexVal) || (typeof isVisible === 'function' ? isVisible(hexVal) : 1);
+            
+            var hideCb = document.getElementById("hideUnrendered") || window.hideCheckbox;
+            if (!(hideCb && hideCb.checked && vStat === 3)) {
+                itemsAdded.unshift({ type: "cp", cp: hexVal });
+            }
+            limitCount++;
         }
-        while (t.length % gridCols !== 0) t.unshift({
-            type: "empty"
-        });
-        listData = t.concat(listData);
-        if (scrollArea) {
-            var scrl = scrollArea.scrollTop;
-            window.updateGridMetrics && window.updateGridMetrics();
-            scrollArea.scrollTo(0, scrl + (t.length / gridCols) * (itemHeight + GAP))
+        
+        while (itemsAdded.length % gridCols !== 0) {
+            itemsAdded.unshift({ type: "empty" });
+        }
+        
+        var oldScrollTop = sa ? sa.scrollTop : 0;
+        listData = itemsAdded.concat(listData);
+        
+        if (typeof window.updateGridMetrics === "function") {
+            window.updateGridMetrics();
+        }
+        
+        if (sa) {
+            var addedHeight = (itemsAdded.length / gridCols) * (itemHeight + GAP);
+            sa.scrollTo(0, oldScrollTop + addedHeight);
         }
     }
-    isFetching = !1
+    isFetching = false;
 };
+
 window.getCurrentVisibleHex = function() {
-    if (!scrollArea || !gridElement) return 33;
-    var e = mMx(0, scrollArea.getBoundingClientRect().top - gridElement.getBoundingClientRect().top + 80),
-        e = mF(e / (itemHeight + GAP)) * gridCols;
-    return listData[e] ? ("cp" === listData[e].type ? listData[e].cp : ("combined" === listData[e].type ? listData[e].str.codePointAt(0) : 33)) : (e = jumpHex && jumpHex.value ? jumpHex.value.trim() : "") && null !== window.validateHex(e) ? parseInt(e, 16) : 33
+    var sa = document.getElementById("scrollArea") || window.scrollArea;
+    var gEl = document.getElementById("symbolGrid") || window.gridElement;
+    
+    if (!sa || !gEl) return 33;
+    var topOffset = Math.max(0, sa.getBoundingClientRect().top - gEl.getBoundingClientRect().top + 80);
+    var idx = Math.floor(topOffset / (itemHeight + GAP)) * gridCols;
+    
+    if (listData[idx]) {
+        if (listData[idx].type === "cp") return listData[idx].cp;
+        if (listData[idx].type === "combined") return listData[idx].str.codePointAt(0);
+    }
+    
+    var jHex = document.getElementById("jumpHex") || window.jumpHex;
+    var jH = jHex && jHex.value ? jHex.value.trim() : "";
+    if (jH && typeof validateHex === "function" && validateHex(jH) !== null) {
+        return parseInt(jH, 16);
+    }
+    return 33;
 };
