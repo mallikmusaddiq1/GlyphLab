@@ -1,15 +1,14 @@
 var saveBkm = () => localforage.setItem("GLYPH_BKM", [...bookmarks]);
-
 var getModScroll = () => {
     var e = document.querySelector(".modal-box");
     return e ? e.scrollTop : 0
 };
-
 window.bkmRawSearch = function(e) {
     var t = resolveBkmId(e);
     if (!t) return;
     var a = t.title;
     closeModals();
+    if (charInput) charInput.value = a;
     window.executeRawSearch && window.executeRawSearch(a)
 };
 

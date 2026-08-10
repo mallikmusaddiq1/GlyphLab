@@ -9,9 +9,7 @@ function updateGridMetrics() {
     if (w === 0) w = window.innerWidth - (window.innerWidth <= 600 ? 20 : 80);
     gridCols = window.innerWidth <= 600 ? 3 : mMx(1, mF((w + GAP) / (130 + GAP)));
     itemWidth = (w - (gridCols - 1) * GAP) / gridCols;
-
-    itemHeight = 1.48 * itemWidth; 
-    
+    itemHeight = 1.48 * itemWidth;
     var rows = mC(listData.length / gridCols);
     gridElement.style.height = rows * (itemHeight + GAP) + "px";
     window.renderVirtualGrid && window.renderVirtualGrid()
@@ -37,7 +35,6 @@ function getCardHTML(e) {
         stBtn = `<button data-bkm-btn="${bId}" class="bkm-btn-style" style="color:${stC}" onclick="tglBkm(event, '${bId}', this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="${isB?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>`;
     return `${stBtn}<div class="symbol-char-container" title="${l}" data-action="draft" ${i}><div class="symbol-char" aria-hidden="true">${t}</div></div>${"combined"===e.type?a:`<div class="symbol-hex">${a}</div>`}<div class="copy-actions"><button class="copy-btn copy-details" ${r} aria-label="Details">DETAILS</button><div class="sym-hex-row"><button class="copy-btn copy-sym" data-action="copy" ${n} aria-label="Copy symbol">SYM</button><button class="copy-btn copy-hex" data-action="copy" ${o} aria-label="Copy hex code">HEX</button></div></div>`
 }
-
 window.renderVirtualGrid = function() {
     if (typeof currentSearchMode !== "undefined" && currentSearchMode !== "smart" && window.ACTIVE_RAW_QUERY) {
         let q = window.ACTIVE_RAW_QUERY.trim();
@@ -128,7 +125,6 @@ window.renderVirtualGrid = function() {
         }
     }
 };
-
 window.discoverBatch = async function(r = 100) {
     if (isFetching) return;
     isFetching = !0;
@@ -164,13 +160,11 @@ window.discoverBatch = async function(r = 100) {
         isFetching = !1
     }
 };
-
 window.clearGrid = function() {
     currentFetchId++, listData = [], isFetching = !1;
     if (gridElement) gridElement.style.height = "0px";
     if (scrollArea) scrollArea.scrollTop = 0
 };
-
 window.discoverFilterBatch = async function(r = 100) {
     if (isFetching) return;
     isFetching = !0;
@@ -199,22 +193,18 @@ window.discoverFilterBatch = async function(r = 100) {
         isFetching = !1
     }
 };
-
 window.addEventListener("resize", updateGridMetrics);
-
 if (gridElement) {
     gridElement.addEventListener("click", e => {
         (e = e.target.closest("[data-action]")) && ("draft" === (e = e.dataset).action ? window.appendToDraft && window.appendToDraft(e.cp ? sFCP(e.cp) : e.str) : "details" === e.action ? "function" == typeof openDetails && openDetails(Number(e.cp)) : "combinedDetails" === e.action ? "function" == typeof openCombinedDetails && openCombinedDetails(e.str, e.name) : "copy" === e.action && copyText(e.cp ? sFCP(e.cp) : e.str, e.type))
     })
 };
-
 if (jumpHex) {
     jumpHex.addEventListener("input", () => {
         var e = parseInt(jumpHex.value.replace(/^(U\+|0x)/i, ""), 16);
         isNaN(e) || e > MAX_UNICODE || (jumpDec.value = e.toString(10))
     })
 };
-
 if (jumpDec) {
     jumpDec.addEventListener("input", () => {
         var e = parseInt(jumpDec.value, 10);
