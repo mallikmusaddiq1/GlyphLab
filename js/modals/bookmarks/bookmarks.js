@@ -1,15 +1,16 @@
 var saveBkm = () => localforage.setItem("GLYPH_BKM", [...bookmarks]);
+
 var getModScroll = () => {
     var e = document.querySelector(".modal-box");
     return e ? e.scrollTop : 0
 };
+
 window.bkmRawSearch = function(e) {
     var t = resolveBkmId(e);
     if (!t) return;
     var a = t.title;
     closeModals();
-    if (charInput) charInput.value = a;
-    window.executeRawSearch && window.executeRawSearch(a)
+    window.executeRawSearch && window.executeRawSearch(a);
 };
 
 function tglBkm(e, t, o) {
@@ -158,10 +159,12 @@ function openBkm() {
         }
     }, 150), AS()
 }
+
 window.toggleCacheToggles = function() {
     let e = document.getElementById("cacheTogglesContainer");
     e && (e.style.display = "none" === e.style.display || !e.style.display ? "flex" : "none")
 };
+
 window.executeCustomClearCache = function() {
     window.isClearing = !0;
     let e = document.getElementById("ccAppCacheCheck")?.checked,
@@ -205,6 +208,7 @@ window.executeCustomClearCache = function() {
         setTimeout(() => location.reload(), 50)
     })
 };
+
 window._origResetDefaults = window.resetDefaults;
 window.resetDefaults = function() {
     let e = document.getElementById("ccAppCacheCheck"),

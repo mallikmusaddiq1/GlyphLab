@@ -39,12 +39,12 @@ var AS = () => {
                     }
                 }
                 ["shortcutsContainer", "activeFiltersContainer", "transformContent", "filtersMenu", "gsiScrollContainer", "filterTabsHeader"].forEach((e) => {
-                    let t = $(e);
-                    t && (0 < t.offsetWidth || 0 < t.offsetHeight) && (APP_S[e] = {
-                        t: t.scrollTop,
-                        l: t.scrollLeft
-                    });
-                }),
+                        let t = $(e);
+                        t && (0 < t.offsetWidth || 0 < t.offsetHeight) && (APP_S[e] = {
+                            t: t.scrollTop,
+                            l: t.scrollLeft
+                        });
+                    }),
                     document.querySelectorAll("[data-fcat]").forEach((e) => {
                         let t = e.getAttribute("data-fcat");
                         t && (0 < e.offsetWidth || 0 < e.offsetHeight) && (APP_S[t] = {
@@ -82,4 +82,7 @@ var scrollAS = () => {
 document.addEventListener("input", AS);
 document.addEventListener("change", AS);
 document.addEventListener("click", () => setTimeout(AS, 10));
-document.addEventListener("scroll", scrollAS, { passive: true, capture: true });
+document.addEventListener("scroll", scrollAS, {
+    passive: true,
+    capture: true
+});
