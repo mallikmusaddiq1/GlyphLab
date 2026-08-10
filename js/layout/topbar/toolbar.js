@@ -1,4 +1,49 @@
+window.validateHex = function(e) {
+    return /^[0-9A-Fa-f]{1,6}$/.test(e = e.replace(/^(U\+|0x)/i, "")) && 0 <= (e = parseInt(e, 16)) && e <= MAX_UNICODE ? e : null;
+};
+
+window.endJmp = function() {
+    isJumping = !1; 
+    if(typeof renderVirtualGrid == "function") renderVirtualGrid();
+};
+
+window.appendToDraft = function(e) {
+    if (e === undefined || e === null || e === "undefined") return;
+    var str = String(e);
+    if (!draftArea) return;
+    var t = draftArea.selectionStart,
+        n = draftArea.selectionEnd;
+    draftArea.value = draftArea.value.substring(0, t) + str + draftArea.value.substring(n);
+    draftArea.setSelectionRange(t + str.length, t + str.length);
+    if (typeof window.AS === "function") window.AS();
+};
+
+window.copyDraft = function() {
+    var e = draftArea ? draftArea.value : "";
+    e ? copyText(e, "Draft") : showToast("Draft is empty", "error");
+};
+
+window.clearDraft = function() {
+    if (draftArea) draftArea.value = "";
+    if (typeof window.AS === "function") window.AS();
+};
+
+window.toggleToolbar = function() {
+    var e = document.getElementById("toolbarCollapsible"),
+        t = document.getElementById("toolbarToggleBtn");
+    if (!e) return;
+    if ("none" === e.style.display || !e.style.display) {
+        e.style.display = "flex";
+        if (t) { t.innerHTML = "\u25B2"; t.setAttribute("aria-expanded", "true"); }
+    } else {
+        e.style.display = "none";
+        if (t) { t.innerHTML = "\u25BC"; t.setAttribute("aria-expanded", "false"); }
+    }
+    if (typeof updateGridMetrics == "function") updateGridMetrics();
+};
+
 window.executeRawSearch = function(e) {
+    window.PENDING_SEARCH_ITEM = typeof window.getCurrentVisibleItem === "function" ? window.getCurrentVisibleItem() : null;
     window.ACTIVE_RAW_QUERY = e;
     isJumping = true;
     if (typeof clearGrid === "function") clearGrid();
@@ -28,6 +73,22 @@ window.executeRawSearch = function(e) {
             hl: "normal"
         });
     });
+
+    if (window.PENDING_SEARCH_ITEM) {
+        let targetItem = window.PENDING_SEARCH_ITEM;
+        window.PENDING_SEARCH_ITEM = null;
+        let actualIndex = listData.findIndex(x => x.type === targetItem.type && (targetItem.type === 'cp' ? x.cp === targetItem.cp : x.str === targetItem.str));
+        if (actualIndex >= 0 && typeof scrollArea !== "undefined" && scrollArea) {
+            setTimeout(() => {
+                var ih = typeof itemHeight !== "undefined" ? itemHeight : 188.5;
+                var gap = typeof GAP !== "undefined" ? GAP : 12;
+                var cols = typeof gridCols !== "undefined" ? gridCols : 3;
+                scrollArea.scrollTop = Math.floor(actualIndex / cols) * (ih + gap);
+            }, 50);
+            return;
+        }
+    }
+
     if (0 !== listData.length) {
         let r = listData[0],
             n = "combined" === r.type ? r.str.codePointAt(0) : r.cp,
@@ -50,7 +111,11 @@ window.jumpToHex = function() {
 window.findChar = function() {
     let e = charInput ? charInput.value.trim() : "",
         t = document.getElementById("notFoundMsg");
+        
+    window.PENDING_SEARCH_ITEM = typeof window.getCurrentVisibleItem === "function" ? window.getCurrentVisibleItem() : null;
+
     if (!e) return (window.ACTIVE_RAW_QUERY = ""), t && (t.style.display = "none"), window.jumpToHex();
+
     if ("smart" === currentSearchMode) {
         window.ACTIVE_RAW_QUERY = "";
         isJumping = true;
@@ -79,21 +144,46 @@ if (worker) {
                 r = document.getElementById("loadingMsg");
             if (r) r.style.display = "none";
             let n = charInput ? charInput.value.trim() : "";
+            
             if (t && 0 < t.length) {
                 if (a) a.style.display = "none";
                 isFilterMode = false;
                 hlWord = true;
-                let o = t[0],
-                    i = "combined" === o.type ? o.str.codePointAt(0) : o.cp,
-                    l = t[t.length - 1],
-                    d = "combined" === l.type ? l.str.codePointAt(0) : l.cp;
-                jumpHex && ((jumpHex.value = toH(i).padStart(4, "0")), jumpHex.classList.remove("invalid"));
-                jumpDec && (jumpDec.value = i.toString(10));
                 currentFetchId++;
                 listData = [...t];
-                currentTopHex = i;
-                currentBottomHex = d + 1;
-                if (typeof window.finishSearchJump === "function") window.finishSearchJump(listData.length);
+
+                let targetItem = window.PENDING_SEARCH_ITEM;
+                window.PENDING_SEARCH_ITEM = null;
+
+                let actualIndex = -1;
+                if (targetItem) {
+                    actualIndex = listData.findIndex(x => x.type === targetItem.type && (targetItem.type === 'cp' ? x.cp === targetItem.cp : x.str === targetItem.str));
+                }
+
+                if (actualIndex >= 0 && typeof scrollArea !== "undefined" && scrollArea) {
+                    setTimeout(() => {
+                        var ih = typeof itemHeight !== "undefined" ? itemHeight : 188.5;
+                        var gap = typeof GAP !== "undefined" ? GAP : 12;
+                        var cols = typeof gridCols !== "undefined" ? gridCols : 3;
+                        scrollArea.scrollTop = Math.floor(actualIndex / cols) * (ih + gap);
+                        
+                        let i = "combined" === targetItem.type ? targetItem.str.codePointAt(0) : targetItem.cp;
+                        jumpHex && ((jumpHex.value = toH(i).padStart(4, "0")), jumpHex.classList.remove("invalid"));
+                        jumpDec && (jumpDec.value = i.toString(10));
+                        currentTopHex = i;
+                        if (typeof window.finishSearchJump === "function") window.finishSearchJump(0);
+                    }, 50);
+                } else {
+                    let o = t[0],
+                        i = "combined" === o.type ? o.str.codePointAt(0) : o.cp,
+                        l = t[t.length - 1],
+                        d = "combined" === l.type ? l.str.codePointAt(0) : l.cp;
+                    jumpHex && ((jumpHex.value = toH(i).padStart(4, "0")), jumpHex.classList.remove("invalid"));
+                    jumpDec && (jumpDec.value = i.toString(10));
+                    currentTopHex = i;
+                    currentBottomHex = d + 1;
+                    if (typeof window.finishSearchJump === "function") window.finishSearchJump(listData.length);
+                }
             } else {
                 if (a) {
                     a.style.display = "block";

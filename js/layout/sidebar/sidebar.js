@@ -29,9 +29,16 @@ window.AppConfig = {
         label: "HIDE UNRENDERED",
         default: !0,
         action: e => {
+            if (typeof window.captureScrollState === "function") window.captureScrollState();
             let t = document.getElementById("btnRawSearch"),
                 n = document.getElementById("charInput");
-            t && t.classList.contains("active") && n && "" !== n.value.trim() ? "function" == typeof findChar && findChar() : "function" == typeof reloadFilters && reloadFilters()
+            if (n && "" !== n.value.trim() && currentSearchMode === "smart") {
+                "function" == typeof findChar && findChar();
+            } else if (t && t.classList.contains("active") && n && "" !== n.value.trim()) {
+                "function" == typeof executeRawSearch && executeRawSearch(n.value.trim());
+            } else {
+                "function" == typeof reloadFilters && reloadFilters();
+            }
         }
     }, {
         id: "desktopSiteCheck",
@@ -76,7 +83,8 @@ window.AppConfig = {
             }
             l.action && l.action(i)
         }
-        window.hideCheckbox = document.getElementById("hideUnrendered"), window.liveUpdateCheck = document.getElementById("liveUpdateCheck")
+        window.hideCheckbox = document.getElementById("hideUnrendered");
+        window.liveUpdateCheck = document.getElementById("liveUpdateCheck");
     },
     async loadAsync() {
         let e = await localforage.getItem(this.storeKey);
@@ -110,7 +118,7 @@ window.AppConfig = {
     }
 };
 
-function clearCacheAndReload() {
+window.clearCacheAndReload = function() {
     isClearing = !0, clearTimeout(ast), document.removeEventListener("input", AS), document.removeEventListener("change", AS), document.removeEventListener("click", AS), document.removeEventListener("scroll", AS, !0);
     let e = {
         i: {},
@@ -129,47 +137,19 @@ function clearCacheAndReload() {
             })
         })
     })
-}
+};
 
-function resetDefaults() {
+window.resetDefaults = function() {
     window.AppConfig.reset()
-}
+};
 
-function appendToDraft(e) {
-    var t = draftArea.selectionStart,
-        n = draftArea.selectionEnd;
-    draftArea.value = draftArea.value.substring(0, t) + e + draftArea.value.substring(n), draftArea.setSelectionRange(t + e.length, t + e.length)
-}
-
-function copyDraft() {
-    var e = draftArea.value;
-    e ? copyText(e, "Draft") : showToast("Draft is empty", "error")
-}
-
-function clearDraft() {
-    draftArea.value = ""
-}
-
-function validateHex(e) {
-    return /^[0-9A-Fa-f]{1,6}$/.test(e = e.replace(/^(U\+|0x)/i, "")) && 0 <= (e = parseInt(e, 16)) && e <= MAX_UNICODE ? e : null
-}
-
-function endJmp() {
-    isJumping = !1, "function" == typeof renderVirtualGrid && renderVirtualGrid()
-}
-
-function jumpToHex() {
-    var e = jumpHex.value.trim();
-    null !== (e = validateHex("" === e ? "0021" : e)) ? (isJumping = !0, jumpHex.classList.remove("invalid"), jumpHex.value = toH(e).padStart(4, "0"), jumpDec.value = e.toString(10), "function" == typeof clearGrid && clearGrid(), activeFilters.clear(), "function" == typeof renderActiveFilters && renderActiveFilters(), isFilterMode = !1, hlWord = !1, currentTopHex = e, currentBottomHex = e, finishSearchJump(0)) : (jumpHex.classList.add("invalid"), showToast("Invalid Hex Code", "error"))
-}
-
-function toggleSidebar() {
+window.toggleSidebar = function() {
     sidebar.classList.toggle("show")
-}
+};
 
-function toggleToolbar() {
-    var e = $("toolbarCollapsible"),
-        t = $("toolbarToggleBtn");
-    "none" === e.style.display || !e.style.display ? (e.style.display = "flex", t && (t.innerHTML = "\u25B2", t.setAttribute("aria-expanded", "true"))) : (e.style.display = "none", t && (t.innerHTML = "\u25BC", t.setAttribute("aria-expanded", "false"))), "function" == typeof updateGridMetrics && updateGridMetrics()
-}
-window.AppConfig.renderInitial(), window.AppConfig.loadAsync();
+window.refreshApp = function() {
+    window.location.reload(true);
+};
+
+window.AppConfig.renderInitial();
+window.AppConfig.loadAsync();

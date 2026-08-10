@@ -1,43 +1,9 @@
-window.finishSearchJump = (e) => {
-    let t = defaultCardsToLoad - e,
-        f = () => {
-            if ("function" == typeof loadPrev) loadPrev();
-            setTimeout(endJmp, 100);
-        };
-    if (0 < t && "function" == typeof discoverBatch) {
-        discoverBatch(t).then(f);
-    } else {
-        if ("function" == typeof updateGridMetrics) updateGridMetrics();
-        f();
-    }
-};
-
-window.switchToolbarTab = (t) => {
-    window.currentToolbarTab = t;
-    if (panelToolSearch) panelToolSearch.style.display = "search" === t ? "block" : "none";
-    if (panelToolJump) panelToolJump.style.display = "jump" === t ? "block" : "none";
-    if (panelToolDraft) panelToolDraft.style.display = "draft" === t ? "block" : "none";
-    if (tabToolSearch) tabToolSearch.classList.toggle("active", "search" === t);
-    if (tabToolJump) tabToolJump.classList.toggle("active", "jump" === t);
-    if (tabToolDraft) tabToolDraft.classList.toggle("active", "draft" === t);
-};
-
-window.setSearchMode = (e) => {
-    currentSearchMode = e;
-    localStorage.setItem("glyphlab_search_mode", e);
-    if (btnSmartSearch) btnSmartSearch.classList.toggle("active", "smart" === e);
-    if (btnRawSearch) btnRawSearch.classList.toggle("active", "smart" !== e);
-    if (charInput && charInput.value && window.findChar) window.findChar();
-};
-
 window.newWorkerRegistration = null;
 window.swUpdateAvailable = false;
 
 window.getCurrentSWVersion = async function() {
     try {
-        let res = await fetch("./service-worker.js", {
-            cache: "no-cache"
-        });
+        let res = await fetch("./service-worker.js", { cache: "no-cache" });
         if (res.ok) {
             let text = await res.text();
             let match = text.match(/CACHE_VERSION\s*=\s*["']([^"']+)["']/);
@@ -88,18 +54,14 @@ window.handleUpdateClick = async function() {
         } else if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage("SKIP_WAITING");
         }
-        setTimeout(() => {
-            window.location.reload(true);
-        }, 300);
+        setTimeout(() => { window.location.reload(true); }, 300);
     } else {
         if (btn) {
             btn.innerText = "CHECKING...";
             btn.disabled = true;
         }
         try {
-            if (window.newWorkerRegistration) {
-                await window.newWorkerRegistration.update();
-            }
+            if (window.newWorkerRegistration) await window.newWorkerRegistration.update();
             let reg = window.newWorkerRegistration;
             if (reg && (reg.waiting || reg.installing)) {
                 window.swUpdateAvailable = true;
@@ -126,9 +88,7 @@ window.onload = async () => {
             let a = JSON.parse(t);
             if (a.f) {
                 let parsedF = JSON.parse(a.f);
-                if (parsedF && (parsedF.length > 0 || Object.keys(parsedF).length > 0)) {
-                    hasFilters = true;
-                }
+                if (parsedF && (parsedF.length > 0 || Object.keys(parsedF).length > 0)) hasFilters = true;
             }
         }
         if (!hasFilters && initialLoaderEl) initialLoaderEl.style.display = "flex";
@@ -137,7 +97,6 @@ window.onload = async () => {
     }
     
     const toggles = ["hideUnrendered", "liveUpdateCheck", "wrapSearchCheck", "wrapDraftCheck", "wrapFontCheck", "expandFontCheck"];
-    
     toggles.forEach(id => {
         let el = document.getElementById(id);
         if (el) {
@@ -169,15 +128,13 @@ window.onload = async () => {
         if (e) bookmarks = new Set(e);
     } catch (e) {}
     
-    setSearchMode(currentSearchMode);
+    if (typeof setSearchMode === "function") setSearchMode(currentSearchMode);
     
     let pData = gCD("./data/datasets.json").then(async e => {
         if (e) {
             fontCategories = e.fonts || {};
             setTimeout(() => {
-                let d = new Intl.Segmenter(void 0, {
-                        granularity: "grapheme"
-                    }),
+                let d = new Intl.Segmenter(void 0, { granularity: "grapheme" }),
                     u = x => x ? Array.from(d.segment(String.fromCodePoint(...x))).map(s => s.segment) : [];
                 for (let [g, h] of Object.entries(fontCategories)) {
                     for (let [f, v] of Object.entries(h)) {
@@ -200,8 +157,7 @@ window.onload = async () => {
                 for (let i = 0; i < chunkKeys.length; i++) {
                     let g = chunkKeys[i];
                     a[g] = null;
-                    let groupData = e.combined[g],
-                        charGroup = [];
+                    let groupData = e.combined[g], charGroup = [];
                     for (let k in groupData) {
                         let charStr = (k.includes(",") || !isNaN(k)) ? String.fromCodePoint(...k.split(",").map(Number)) : k;
                         let ex = typeof expandUnicode === "function" ? expandUnicode(charStr) : [charStr];
@@ -209,10 +165,7 @@ window.onload = async () => {
                             let formattedName = groupData[k].toLowerCase().replace(/\b\w/g, m => m.toUpperCase());
                             COMBINED_CHARS[cStr] = formattedName;
                             COMBINED_CAT_MAP[cStr] = g;
-                            charGroup.push({
-                                str: cStr,
-                                name: formattedName
-                            });
+                            charGroup.push({ str: cStr, name: formattedName });
                         });
                     }
                     a[g] = charGroup;
@@ -238,16 +191,13 @@ window.onload = async () => {
                 uN = !!(uH || uD || uS);
                 
             if (t) try {
-                let a = JSON.parse(t),
-                    r = false,
-                    cJ = !uN && !activeFilters.size && (!a.i || !a.i.charInput);
-                    
+                let a = JSON.parse(t), r = false, cJ = !uN && !activeFilters.size && (!a.i || !a.i.charInput);
                 if (a.v) {
                     if (a.v.tab) currentBkmTab = a.v.tab;
                     if (a.v.filterTab) currentFilterTab = a.v.filterTab;
                     if (a.v.gsiSortOrder) window.gsiSortOrder = a.v.gsiSortOrder;
                     if (a.v.gsiActiveAlphas) window.gsiActiveAlphas = new Set(a.v.gsiActiveAlphas);
-                    if (a.v.toolbarTab) window.switchToolbarTab(a.v.toolbarTab);
+                    if (a.v.toolbarTab && typeof window.switchToolbarTab === "function") window.switchToolbarTab(a.v.toolbarTab);
                     if (a.v.item) {
                         window.PENDING_GRID_ITEM = a.v.item;
                         if (cJ) {
@@ -285,9 +235,7 @@ window.onload = async () => {
                     let i = e.id || "inp_" + t;
                     if (["hideUnrendered", "liveUpdateCheck", "wrapSearchCheck", "wrapDraftCheck", "wrapFontCheck", "expandFontCheck", "desktopSiteCheck"].includes(e.id)) return;
                     if (void 0 !== a.i[i]) {
-                        if (("charInput" === e.id && uS) || (r && ("jumpHex" === e.id || "jumpDec" === e.id))) {
-                            return;
-                        }
+                        if (("charInput" === e.id && uS) || (r && ("jumpHex" === e.id || "jumpDec" === e.id))) return;
                         if ("checkbox" === e.type) e.checked = a.i[i];
                         else e.value = a.i[i];
                     }
@@ -305,8 +253,6 @@ window.onload = async () => {
                         uniModalTitle.innerHTML = a.ui.uniModalTitle.t;
                         uniModalTitle.style.color = a.ui.uniModalTitle.c;
                     }
-                    
-                    // Perfect Toolbar Toggle Button Text Restoration
                     if (a.ui.toolbarCollapsible) {
                         let e = $("toolbarToggleBtn");
                         if (e) {
@@ -363,23 +309,23 @@ window.onload = async () => {
             
             if (uN) {
                 if (uS_smart) {
-                    closeModals();
+                    if(typeof closeModals === "function") closeModals();
                     charInput.value = uS_smart;
-                    window.setSearchMode("smart");
+                    if(typeof window.setSearchMode === "function") window.setSearchMode("smart");
                 } else if (uS_raw) {
-                    closeModals();
+                    if(typeof closeModals === "function") closeModals();
                     charInput.value = uS_raw;
-                    window.setSearchMode("raw");
+                    if(typeof window.setSearchMode === "function") window.setSearchMode("raw");
                 } else if (uS_old) {
-                    closeModals();
+                    if(typeof closeModals === "function") closeModals();
                     charInput.value = uS_old;
                     if ("function" == typeof window.findChar) window.findChar();
-                } else if (uH && validateHex(uH)) {
-                    closeModals();
+                } else if (uH && typeof validateHex === "function" && validateHex(uH)) {
+                    if(typeof closeModals === "function") closeModals();
                     jumpHex.value = uH;
                     if ("function" == typeof window.jumpToHex) window.jumpToHex();
                 } else if (uD && !isNaN(parseInt(uD, 10))) {
-                    closeModals();
+                    if(typeof closeModals === "function") closeModals();
                     jumpHex.value = toH(parseInt(uD, 10)).padStart(4, "0");
                     if ("function" == typeof window.jumpToHex) window.jumpToHex();
                 }
@@ -393,14 +339,6 @@ window.onload = async () => {
             }
             
             if (initialLoaderEl) initialLoaderEl.style.display = "none";
-            
-            let _t = 0;
-            document.addEventListener("touchend", e => {
-                var a = new Date().getTime();
-                if (a - _t <= 300) e.preventDefault();
-                _t = a;
-            }, false);
-            
             window.renderUpdateUI();
         }).catch(() => {
             window.isAppReady = true;
@@ -446,35 +384,3 @@ if ("serviceWorker" in navigator) {
             .catch(err => console.warn("SW Registration Error:", err));
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    localforage.getItem("GLYPH_FAB_STATE").then(e => {
-        if (e) {
-            if ($("fabMenu")) $("fabMenu").classList.add("active");
-            if ($("fabMain")) $("fabMain").classList.add("active");
-        }
-    });
-    let tE = $("toast");
-    if (tE) {
-        new MutationObserver(() => {
-            if (tE.innerText.includes("!")) {
-                tE.innerText = tE.innerText.replace(/!/g, "");
-            }
-        }).observe(tE, { childList: true, characterData: true, subtree: true });
-    }
-});
-
-window.getRawSearchCardClass = function(r, e) {
-    if (!e || "string" != typeof r) return "";
-    try {
-        let t = Array.from(new Intl.Segmenter(void 0, { granularity: "grapheme" }).segment(e.trim())).map(r => r.segment),
-            n = t.filter(r => Array.from(r).length > 1),
-            a = t.filter(r => 1 === Array.from(r).length),
-            o = n.flatMap(r => Array.from(r)),
-            i = n.length > 0;
-        return n.includes(r) ? "thick-golden-glowing-card" : o.includes(r) ? "medium-white-glowing-card" : a.includes(r) ? i ? "medium-golden-glow-card" : "thick-golden-glowing-card" : "";
-    } catch (g) {
-        console.error("Raw Search HL Error:", g);
-        return "";
-    }
-};
