@@ -28,11 +28,15 @@ async function exportBkm(e) {
         nLen = lItems.length;
     rStart = Date.now();
     if ("html" === e) {
-        bkmBlobs.push(new Blob([getHTMLHeader()], { type: "text/html" }));
+        bkmBlobs.push(new Blob([getHTMLHeader()], {
+            type: "text/html"
+        }));
         for (var tIdx = 0; tIdx < nLen; tIdx++) {
             outStr += buildCardHTML(lItems[tIdx], tIdx, !1);
             if (tIdx % 100 === 0 || tIdx === nLen - 1) {
-                bkmBlobs.push(new Blob([outStr], { type: "text/html" }));
+                bkmBlobs.push(new Blob([outStr], {
+                    type: "text/html"
+                }));
                 outStr = "";
                 updateProgress("bkm", 50 + Math.floor((tIdx + 1) / nLen * 50), 100, rStart);
                 await new Promise(function(res) {
@@ -40,7 +44,9 @@ async function exportBkm(e) {
                 });
             }
         }
-        bkmBlobs.push(new Blob([getHTMLFooter(!1)], { type: "text/html" }));
+        bkmBlobs.push(new Blob([getHTMLFooter(!1)], {
+            type: "text/html"
+        }));
     } else {
         var grp = {
             SINGLE: {},
@@ -73,7 +79,9 @@ async function exportBkm(e) {
                         outStr += "      " + strItem + (itIdx < itemsArr.length - 1 ? ",\n" : "\n");
                         bCount++;
                         if (bCount % 100 === 0 || bCount === nLen) {
-                            bkmBlobs.push(new Blob([outStr], { type: "application/json" }));
+                            bkmBlobs.push(new Blob([outStr], {
+                                type: "application/json"
+                            }));
                             outStr = "";
                             updateProgress("bkm", 50 + Math.floor(bCount / nLen * 50), 100, rStart);
                             await new Promise(function(res) {
@@ -87,7 +95,9 @@ async function exportBkm(e) {
             }
             outStr += "}";
             if (outStr.trim().length > 2) {
-                bkmBlobs.push(new Blob([outStr], { type: "application/json" }));
+                bkmBlobs.push(new Blob([outStr], {
+                    type: "application/json"
+                }));
                 outStr = "";
             }
         } else if ("txt" === e) {
@@ -105,7 +115,9 @@ async function exportBkm(e) {
                         outStr += strItem;
                         bCount++;
                         if (bCount % 100 === 0 || bCount === nLen) {
-                            bkmBlobs.push(new Blob([outStr], { type: "text/plain" }));
+                            bkmBlobs.push(new Blob([outStr], {
+                                type: "text/plain"
+                            }));
                             outStr = "";
                             updateProgress("bkm", 50 + Math.floor(bCount / nLen * 50), 100, rStart);
                             await new Promise(function(res) {
@@ -116,7 +128,9 @@ async function exportBkm(e) {
                 }
             }
             if (outStr.trim().length > 0) {
-                bkmBlobs.push(new Blob([outStr], { type: "text/plain" }));
+                bkmBlobs.push(new Blob([outStr], {
+                    type: "text/plain"
+                }));
                 outStr = "";
             }
         }

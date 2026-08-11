@@ -13,6 +13,7 @@ function impBkmJ() {
             try {
                 var a = JSON.parse(e.target.result),
                     r = [];
+
                 function l(e) {
                     if (Array.isArray(e)) {
                         e.forEach(function(e) {
