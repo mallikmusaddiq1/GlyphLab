@@ -1,10 +1,15 @@
 function getHTMLHeader() {
     var e = window.EXPORT_TEMPLATES || {};
-    return (e.header || "").replace("%EXPORT_CSS%", () => (e.css || ""))
+    var headerTpl = (e.header && e.header.trim().length > 0) ? e.header : '<!DOCTYPE html><html><head><meta charset="utf-8"><title>GlyphLab Export</title><style>%EXPORT_CSS%</style></head><body><h1>GLYPHLAB <span>EXPORT</span></h1><div style="display:flex;justify-content:center;gap:10px;margin-bottom:10px"><button onclick="dLG(\'json\')" style="padding:8px 16px;background:#ffd700;color:#000;border:none;border-radius:6px;font-weight:bold;cursor:pointer;font-size:0.85rem">EXPORT JSON</button><button onclick="dLG(\'txt\')" style="padding:8px 16px;background:#fff;color:#000;border:none;border-radius:6px;font-weight:bold;cursor:pointer;font-size:0.85rem">EXPORT TXT</button></div><div id="glbProgCont" style="display:none;margin-bottom:20px;width:100%;flex-direction:column;align-items:center;gap:8px;padding:0 4px"><div style="width:100%;background:rgba(255,255,255,0.1);border-radius:10px;height:8px;overflow:hidden"><div id="glbProgBar" style="width:0%;height:100%;background:linear-gradient(90deg,#ffa500,#ffd700);transition:width .1s linear"></div></div><div style="display:flex;justify-content:space-between;width:100%;font-size:.75rem;color:#a1a1aa;font-weight:bold"><span id="glbProgTxt">0%</span><span id="glbProgETA">Calculating ETA...</span></div></div><button class="fab-filter" onclick="tglM(true)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></button><div id="fOverlay" class="f-overlay" onclick="tglM(false)"><div class="f-modal" onclick="event.stopPropagation()"><div class="f-header"><span class="f-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> FILTERS</span><button class="f-close" onclick="tglM(false)">&times;</button></div><div class="f-body"><div class="f-tabs" id="fTabs"></div><input type="text" id="fSearch" class="f-search" placeholder="Search filters..." onkeyup="renderB()"><button id="clearBtn" class="clear-btn" onclick="clrF()">CLEAR ALL FILTERS</button><div class="f-blocks" id="fBlocks"></div></div></div></div><div id="cardsContainer">';
+    var cssContent = e.css || "";
+    return headerTpl.split("%EXPORT_CSS%").join(cssContent);
 }
 
-function getHTMLFooter(e = !1) {
-    var t = window.EXPORT_TEMPLATES || {},
-        a = (window.EXPORT_DOC_PNG_SCRIPT || "") + (window.EXPORT_DOC_SCRIPT_CONTENT || "");
-    return (t.footer || "").replace("%EXPORT_JS%", () => (e ? "" : a))
+function getHTMLFooter(e) {
+    if (typeof e === "undefined") e = false;
+    var t = window.EXPORT_TEMPLATES || {};
+    var footerTpl = (t.footer && t.footer.trim().length > 0) ? t.footer : "</div><script>%EXPORT_JS%</script></body></html>";
+    var jsCode = (window.EXPORT_DOC_PNG_SCRIPT || "") + "\n" + (window.EXPORT_DOC_SCRIPT_CONTENT || "");
+    if (e) jsCode = "";
+    return footerTpl.split("%EXPORT_JS%").join(jsCode);
 }

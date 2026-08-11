@@ -3,8 +3,8 @@ window.validateHex = function(e) {
 };
 
 window.endJmp = function() {
-    isJumping = !1; 
-    if(typeof renderVirtualGrid == "function") renderVirtualGrid();
+    isJumping = !1;
+    if (typeof renderVirtualGrid == "function") renderVirtualGrid();
 };
 
 window.appendToDraft = function(e) {
@@ -34,10 +34,16 @@ window.toggleToolbar = function() {
     if (!e) return;
     if ("none" === e.style.display || !e.style.display) {
         e.style.display = "flex";
-        if (t) { t.innerHTML = "\u25B2"; t.setAttribute("aria-expanded", "true"); }
+        if (t) {
+            t.innerHTML = "\u25B2";
+            t.setAttribute("aria-expanded", "true");
+        }
     } else {
         e.style.display = "none";
-        if (t) { t.innerHTML = "\u25BC"; t.setAttribute("aria-expanded", "false"); }
+        if (t) {
+            t.innerHTML = "\u25BC";
+            t.setAttribute("aria-expanded", "false");
+        }
     }
     if (typeof updateGridMetrics == "function") updateGridMetrics();
 };
@@ -111,7 +117,7 @@ window.jumpToHex = function() {
 window.findChar = function() {
     let e = charInput ? charInput.value.trim() : "",
         t = document.getElementById("notFoundMsg");
-        
+
     window.PENDING_SEARCH_ITEM = typeof window.getCurrentVisibleItem === "function" ? window.getCurrentVisibleItem() : null;
 
     if (!e) return (window.ACTIVE_RAW_QUERY = ""), t && (t.style.display = "none"), window.jumpToHex();
@@ -144,7 +150,7 @@ if (worker) {
                 r = document.getElementById("loadingMsg");
             if (r) r.style.display = "none";
             let n = charInput ? charInput.value.trim() : "";
-            
+
             if (t && 0 < t.length) {
                 if (a) a.style.display = "none";
                 isFilterMode = false;
@@ -166,7 +172,7 @@ if (worker) {
                         var gap = typeof GAP !== "undefined" ? GAP : 12;
                         var cols = typeof gridCols !== "undefined" ? gridCols : 3;
                         scrollArea.scrollTop = Math.floor(actualIndex / cols) * (ih + gap);
-                        
+
                         let i = "combined" === targetItem.type ? targetItem.str.codePointAt(0) : targetItem.cp;
                         jumpHex && ((jumpHex.value = toH(i).padStart(4, "0")), jumpHex.classList.remove("invalid"));
                         jumpDec && (jumpDec.value = i.toString(10));

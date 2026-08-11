@@ -1,7 +1,8 @@
 function exportSingle(e) {
     var t = generateExportContent([currentDetailExportData], e);
-    triggerDownload([t], "json" === e ? "application/json" : "txt" === e ? "text/plain" : "text/html", "glyphlab_export_" + currentDetailExportData.baseHex + "." + e)
+    triggerDownload([t], "json" === e ? "application/json" : "txt" === e ? "text/plain" : "text/html", "glyphlab_export_" + currentDetailExportData.baseHex + "." + e);
 }
+
 async function exportBkm(e) {
     if (isBkmProcessing) return showToast("Process running!", "error");
     var tArr = [...bookmarks];
@@ -14,10 +15,12 @@ async function exportBkm(e) {
         lItems = [];
     for (var bIdx = 0; bIdx < aLen; bIdx++) {
         var bObj = resolveBkmId(tArr[bIdx]);
-        bObj && lItems.push(bObj);
+        if (bObj) lItems.push(bObj);
         if (bIdx % 100 === 0 || bIdx === aLen - 1) {
             updateProgress("bkm", Math.floor((bIdx + 1) / aLen * 50), 100, rStart);
-            await new Promise(res => setTimeout(res, 0))
+            await new Promise(function(res) {
+                setTimeout(res, 0);
+            });
         }
     }
     var bkmBlobs = [],
@@ -36,25 +39,27 @@ async function exportBkm(e) {
                 }));
                 outStr = "";
                 updateProgress("bkm", 50 + Math.floor((tIdx + 1) / nLen * 50), 100, rStart);
-                await new Promise(res => setTimeout(res, 0))
+                await new Promise(function(res) {
+                    setTimeout(res, 0);
+                });
             }
         }
         bkmBlobs.push(new Blob([getHTMLFooter(!1)], {
             type: "text/html"
-        }))
+        }));
     } else {
         var grp = {
             SINGLE: {},
             COMBINED: {}
         };
-        lItems.forEach(el => {
+        lItems.forEach(function(el) {
             var meta = getExpMeta(el);
             grp[meta.type] || (grp[meta.type] = {});
             grp[meta.type][meta.block] || (grp[meta.type][meta.block] = []);
-            grp[meta.type][meta.block].push(el.items)
+            grp[meta.type][meta.block].push(el.items);
         });
-        if (Object.keys(grp.SINGLE || {}).length === 0) delete grp.SINGLE;
-        if (Object.keys(grp.COMBINED || {}).length === 0) delete grp.COMBINED;
+        if (0 === Object.keys(grp.SINGLE || {}).length) delete grp.SINGLE;
+        if (0 === Object.keys(grp.COMBINED || {}).length) delete grp.COMBINED;
         if ("json" === e) {
             outStr = "{\n";
             var tKeys = Object.keys(grp),
@@ -68,7 +73,9 @@ async function exportBkm(e) {
                     outStr += '    "' + bName + '": [\n';
                     var itemsArr = grp[tName][bName];
                     for (var itIdx = 0; itIdx < itemsArr.length; itIdx++) {
-                        var strItem = JSON.stringify(itemsArr[itIdx], null, 2).split("\n").map((line, lIdx) => 0 === lIdx ? line : "      " + line).join("\n");
+                        var strItem = JSON.stringify(itemsArr[itIdx], null, 2).split("\n").map(function(line, lIdx) {
+                            return 0 === lIdx ? line : "      " + line;
+                        }).join("\n");
                         outStr += "      " + strItem + (itIdx < itemsArr.length - 1 ? ",\n" : "\n");
                         bCount++;
                         if (bCount % 100 === 0 || bCount === nLen) {
@@ -77,19 +84,21 @@ async function exportBkm(e) {
                             }));
                             outStr = "";
                             updateProgress("bkm", 50 + Math.floor(bCount / nLen * 50), 100, rStart);
-                            await new Promise(res => setTimeout(res, 0))
+                            await new Promise(function(res) {
+                                setTimeout(res, 0);
+                            });
                         }
                     }
-                    outStr += "    ]" + (bkIdx < bKeys.length - 1 ? "," : "") + "\n"
+                    outStr += "    ]" + (bkIdx < bKeys.length - 1 ? "," : "") + "\n";
                 }
-                outStr += "  }" + (tkIdx < tKeys.length - 1 ? "," : "") + "\n"
+                outStr += "  }" + (tkIdx < tKeys.length - 1 ? "," : "") + "\n";
             }
             outStr += "}";
             if (outStr.trim().length > 2) {
                 bkmBlobs.push(new Blob([outStr], {
                     type: "application/json"
                 }));
-                outStr = ""
+                outStr = "";
             }
         } else if ("txt" === e) {
             var bCount = 0;
@@ -101,7 +110,7 @@ async function exportBkm(e) {
                     for (var itIdx = 0; itIdx < itemsArr.length; itIdx++) {
                         var strItem = "=== " + itemsArr[itIdx].CHARACTER + " ===\n";
                         for (var prop in itemsArr[itIdx]) {
-                            strItem += prop + ": " + itemsArr[itIdx][prop] + "\n"
+                            strItem += prop + ": " + itemsArr[itIdx][prop] + "\n";
                         }
                         outStr += strItem;
                         bCount++;
@@ -111,22 +120,24 @@ async function exportBkm(e) {
                             }));
                             outStr = "";
                             updateProgress("bkm", 50 + Math.floor(bCount / nLen * 50), 100, rStart);
-                            await new Promise(res => setTimeout(res, 0))
+                            await new Promise(function(res) {
+                                setTimeout(res, 0);
+                            });
                         }
                     }
                 }
             }
-        }
-        if (outStr.trim().length > 0) {
-            bkmBlobs.push(new Blob([outStr], {
-                type: "text/plain"
-            }));
-            outStr = ""
+            if (outStr.trim().length > 0) {
+                bkmBlobs.push(new Blob([outStr], {
+                    type: "text/plain"
+                }));
+                outStr = "";
+            }
         }
     }
     var mime = "json" === e ? "application/json" : "txt" === e ? "text/plain" : "text/html";
     triggerDownload(bkmBlobs, mime, "glyphlab_bookmarks_all." + e);
     showToast("Streaming Export Complete!", "success");
     isBkmProcessing = !1;
-    toggleProgress("bkm", !1)
+    toggleProgress("bkm", !1);
 }

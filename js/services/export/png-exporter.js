@@ -6,26 +6,31 @@ function expPNG() {
     var r = {},
         l = [],
         i = 1920;
-    t.forEach(t => {
+    t.forEach(function(t) {
         var a = String(e.items[t]),
             o = [],
             n = a.split(" ");
-        n.forEach(e => {
+        n.forEach(function(e) {
             if (e.length > 38) {
-                for (var t = 0; t < e.length; t += 38) o.push(e.substr(t, 38))
-            } else o.push(e)
+                for (var t = 0; t < e.length; t += 38) o.push(e.substr(t, 38));
+            } else o.push(e);
         });
         var s = "",
             c = [];
-        o.forEach((e, t) => {
+        o.forEach(function(e, t) {
             var ts = s + e + " ";
-            cD.measureText(ts).width > 2800 && t > 0 ? (c.push(s), s = e + " ") : s = ts
+            if (cD.measureText(ts).width > 2800 && t > 0) {
+                c.push(s);
+                s = e + " ";
+            } else {
+                s = ts;
+            }
         });
         c.push(s);
         r[t] = c;
         var d = Math.max(280, 146 * c.length + 133);
         l.push(d);
-        i += d
+        i += d;
     });
     var o = document.createElement("canvas");
     o.width = 5120;
@@ -36,7 +41,15 @@ function expPNG() {
     n.fillStyle = "#111111";
     n.strokeStyle = "rgba(255,215,0,0.2)";
     n.lineWidth = 16;
-    n.roundRect ? (n.beginPath(), n.roundRect(160, 160, 4800, i - 320, 96), n.fill(), n.stroke()) : (n.fillRect(160, 160, 4800, i - 320), n.strokeRect(160, 160, 4800, i - 320));
+    if (n.roundRect) {
+        n.beginPath();
+        n.roundRect(160, 160, 4800, i - 320, 96);
+        n.fill();
+        n.stroke();
+    } else {
+        n.fillRect(160, 160, 4800, i - 320);
+        n.strokeRect(160, 160, 4800, i - 320);
+    }
     n.textAlign = "center";
     n.textBaseline = "middle";
     n.fillStyle = "#FFD700";
@@ -44,7 +57,7 @@ function expPNG() {
     n.fillText(e.title, 2560, 980);
     n.textAlign = "left";
     var s = 1760;
-    t.forEach((t, e) => {
+    t.forEach(function(t, e) {
         n.fillStyle = "rgba(255,215,0,0.2)";
         n.fillRect(320, s - 160, 4480, 8);
         n.fillStyle = "#FFA500";
@@ -54,15 +67,15 @@ function expPNG() {
         n.font = "bold 96px sans-serif";
         n.textAlign = "right";
         var a = s;
-        r[t].forEach(e => {
+        r[t].forEach(function(e) {
             n.fillText(e.trim(), 4800, a);
-            a += 146
+            a += 146;
         });
         n.textAlign = "left";
-        s += l[e]
+        s += l[e];
     });
     var c = document.createElement("a");
     c.href = o.toDataURL("image/png");
     c.download = "glyphlab_" + e.baseHex + ".png";
-    c.click()
+    c.click();
 }

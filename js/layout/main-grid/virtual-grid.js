@@ -199,7 +199,7 @@ window.discoverBatch = async function(r = 100) {
     var e = ++currentFetchId,
         t = 0,
         a = 0;
-    
+
     var hideCb = document.getElementById("hideUnrendered") || window.hideCheckbox;
 
     while (t < r && currentBottomHex <= MAX_UNICODE && a < 10000) {
@@ -257,7 +257,7 @@ window.discoverFilterBatch = async function(r = 100) {
     var e = currentFetchId,
         t = 0,
         a = 0;
-    
+
     var hideCb = document.getElementById("hideUnrendered") || window.hideCheckbox;
 
     while (t < r && pendingFilterItems.length > 0 && a < 100000) {
@@ -278,8 +278,7 @@ window.discoverFilterBatch = async function(r = 100) {
             var item = pendingFilterItems.shift(),
                 v = item.type === 'cp' ? (visibilityCache.get(item.cp) || (typeof isVisible === "function" ? isVisible(item.cp) : 1)) : 1;
 
-            if (item.type === 'cp' && (hideCb && hideCb.checked && v === 3)) {
-            } else {
+            if (item.type === 'cp' && (hideCb && hideCb.checked && v === 3)) {} else {
                 listData.push(item);
                 t++;
             }
