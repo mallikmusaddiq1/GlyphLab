@@ -1,62 +1,64 @@
 .sidebar {
     position: fixed;
     top: 0;
-    left: -260px;
-    width: 240px;
-    height: 100vh;
+    left: 0;
+    width: 225px;
+    max-width: 70vw;
+    height: 100%;
     height: 100dvh;
-    background: var(--modal-bg);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid var(--border-subtle);
-    transition: left 0.3s ease;
+    background: var(--bg-dark);
+    border-right: 1px solid var(--border-gold);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
     z-index: 2000;
-    padding: 20px 16px;
+    transform: translateX(-100%);
+    transition: var(--transition-normal);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.9);
+    padding: 12px 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .sidebar.show {
-    left: 0;
+    transform: translateX(0);
+}
+
+.sidebar>* {
+    flex-shrink: 0;
 }
 
 .sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 0;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    flex-shrink: 0;
 }
 
 .sidebar-title {
+    color: var(--amber);
     font-weight: 800;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .close-sidebar {
-    background: 0 0;
+    background: none;
     border: none;
     color: var(--error);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     cursor: pointer;
     line-height: 1;
-}
-
-#sidebar .toggle-label {
-    max-width: calc(100% - 50px) !important;
-    white-space: nowrap !important;
-    overflow-x: auto !important;
-    word-break: normal !important;
-    scrollbar-width: none !important;
-    -webkit-overflow-scrolling: touch !important;
-    min-width: 0 !important;
-    text-overflow: clip !important;
-    display: block !important;
-}
-
-#sidebar .toggle-label::-webkit-scrollbar {
-    display: none !important;
+    padding: 0 4px;
 }
