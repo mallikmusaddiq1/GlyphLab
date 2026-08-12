@@ -28,6 +28,12 @@
     max-height: 85vh;
     max-height: 85dvh;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.modal-box::-webkit-scrollbar {
+    display: none;
 }
 
 .modal-header {
