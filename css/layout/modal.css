@@ -22,6 +22,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: 20px;
     padding: 24px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
     width: 90%;
     max-width: 480px;
     box-shadow: var(--modal-sh);
@@ -34,6 +35,8 @@
 
 .modal-box::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
 }
 
 .modal-header {
