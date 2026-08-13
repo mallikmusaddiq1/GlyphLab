@@ -8,11 +8,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 8px;
-    transition:
-        transform 0.2s,
-        background-color 0.2s,
-        border-color 0.2s,
-        box-shadow 0.2s;
+    transition: transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
     will-change: transform;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
@@ -27,9 +23,17 @@
     background: 0 0;
     cursor: pointer;
     transition: 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.symbol-char-container:hover {
+@media (hover: hover) {
+    .symbol-char-container:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+}
+
+.symbol-char-container:active {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
 }

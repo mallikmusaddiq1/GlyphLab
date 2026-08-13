@@ -14,12 +14,60 @@
     -webkit-backdrop-filter: blur(4px);
 }
 
-.btn:hover {
-    background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
-    border-color: var(--border-hover);
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.15);
-    transform: translateY(-2px);
+@media (hover: hover) {
+    .btn:hover {
+        background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
+        border-color: var(--border-hover);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .primary-btn:hover,
+    .details-actions-panel .copy-hex:hover {
+        background: linear-gradient(145deg, rgba(255, 215, 0, 0.25), rgba(255, 165, 0, 0.15)) !important;
+        border-color: var(--accent) !important;
+        color: #fff !important;
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
+        transform: translateY(-2px);
+    }
+
+    .amber-btn:hover {
+        background: linear-gradient(145deg, rgba(255, 165, 0, 0.25), rgba(255, 165, 0, 0.05)) !important;
+        border-color: var(--amber) !important;
+        color: #fff !important;
+        box-shadow: 0 6px 20px rgba(255, 165, 0, 0.25) !important;
+        transform: translateY(-2px);
+    }
+
+    .danger-btn:hover {
+        background: linear-gradient(145deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.05)) !important;
+        border-color: var(--error) !important;
+        color: #ffcccc !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25) !important;
+        transform: translateY(-2px);
+    }
+
+    .btn-purple:hover {
+        background: linear-gradient(145deg, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0.1)) !important;
+        border-color: #8a2be2 !important;
+        color: #fff !important;
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.25) !important;
+        transform: translateY(-2px);
+    }
+
+    .btn-orange:hover {
+        background: linear-gradient(145deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.1)) !important;
+        border-color: #ff9800 !important;
+        color: #fff !important;
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.25) !important;
+        transform: translateY(-2px);
+    }
+
+    .icon-btn:hover {
+        background: rgba(255, 215, 0, 0.1);
+        border-radius: 8px;
+    }
 }
 
 .btn:active {
@@ -37,15 +85,6 @@
     font-size: 0.75rem !important;
 }
 
-.primary-btn:hover,
-.details-actions-panel .copy-hex:hover {
-    background: linear-gradient(145deg, rgba(255, 215, 0, 0.25), rgba(255, 165, 0, 0.15)) !important;
-    border-color: var(--accent) !important;
-    color: #fff !important;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
-    transform: translateY(-2px);
-}
-
 .amber-btn {
     background: linear-gradient(145deg, rgba(255, 165, 0, 0.1), rgba(255, 165, 0, 0.02)) !important;
     color: var(--amber) !important;
@@ -54,14 +93,6 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.amber-btn:hover {
-    background: linear-gradient(145deg, rgba(255, 165, 0, 0.25), rgba(255, 165, 0, 0.05)) !important;
-    border-color: var(--amber) !important;
-    color: #fff !important;
-    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.25) !important;
-    transform: translateY(-2px);
 }
 
 .amber-btn svg {
@@ -76,14 +107,6 @@
     font-weight: 900 !important;
 }
 
-.danger-btn:hover {
-    background: linear-gradient(145deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.05)) !important;
-    border-color: var(--error) !important;
-    color: #ffcccc !important;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25) !important;
-    transform: translateY(-2px);
-}
-
 .danger-btn:active {
     transform: scale(0.95) translateY(0) !important;
 }
@@ -96,14 +119,6 @@
     font-weight: 900 !important;
 }
 
-.btn-purple:hover {
-    background: linear-gradient(145deg, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0.1)) !important;
-    border-color: #8a2be2 !important;
-    color: #fff !important;
-    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.25) !important;
-    transform: translateY(-2px);
-}
-
 .btn-orange {
     background: linear-gradient(145deg, rgba(255, 152, 0, 0.15), rgba(255, 152, 0, 0.05)) !important;
     color: var(--amber) !important;
@@ -112,18 +127,10 @@
     font-weight: 900 !important;
 }
 
-.btn-orange:hover {
-    background: linear-gradient(145deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.1)) !important;
-    border-color: #ff9800 !important;
-    color: #fff !important;
-    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.25) !important;
-    transform: translateY(-2px);
-}
-
 .copy-btn {
     flex: 1;
-    padding: 8px 0;
-    font-size: 0.75rem;
+    padding: 4px 0;
+    font-size: 0.65rem;
     font-weight: 800;
     cursor: pointer;
     border-radius: 6px;
@@ -153,11 +160,6 @@
     align-items: center;
     justify-content: center;
     transition: 0.2s;
-}
-
-.icon-btn:hover {
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 8px;
 }
 
 .icon-only {
