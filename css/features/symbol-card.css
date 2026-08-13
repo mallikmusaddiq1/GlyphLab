@@ -8,7 +8,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 8px;
-    transition: transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        background-color 0.2s,
+        border-color 0.2s,
+        box-shadow 0.2s;
     will-change: transform;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
@@ -22,20 +26,28 @@
     border: none;
     background: 0 0;
     cursor: pointer;
-    transition: 0.2s;
+    border-radius: 8px;
+    transition: background-color 0.2s; 
     -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) {
     .symbol-char-container:hover {
         background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
+    }
+    
+    .symbol-char-container:hover .symbol-char {
+        transform: scale(1.05); 
     }
 }
 
 .symbol-char-container:active {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+}
+
+.symbol-char-container:active .symbol-char {
+    transform: scale(1.1); 
+    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .symbol-char {
@@ -45,6 +57,7 @@
     pointer-events: none;
     color: var(--accent);
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
 }
 
 .symbol-hex {
