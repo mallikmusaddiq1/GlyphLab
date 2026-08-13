@@ -12,9 +12,10 @@
     letter-spacing: 0.5px;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    -webkit-tap-highlight-color: transparent;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
     .btn:hover {
         background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
         border-color: var(--border-hover);
@@ -71,6 +72,10 @@
 }
 
 .btn:active {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
+    border-color: var(--border-hover);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.15);
     transform: scale(0.95) translateY(0);
 }
 
@@ -83,6 +88,15 @@
     font-weight: 900 !important;
     text-transform: uppercase !important;
     font-size: 0.75rem !important;
+}
+
+.primary-btn:active,
+.details-actions-panel .copy-hex:active {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.25), rgba(255, 165, 0, 0.15)) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
+    transform: scale(0.95) translateY(0) !important;
 }
 
 .amber-btn {
@@ -99,6 +113,14 @@
     stroke: currentColor !important;
 }
 
+.amber-btn:active {
+    background: linear-gradient(145deg, rgba(255, 165, 0, 0.25), rgba(255, 165, 0, 0.05)) !important;
+    border-color: var(--amber) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.25) !important;
+    transform: scale(0.95) translateY(0) !important;
+}
+
 .danger-btn {
     background: linear-gradient(145deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.02)) !important;
     color: var(--error) !important;
@@ -108,6 +130,10 @@
 }
 
 .danger-btn:active {
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.05)) !important;
+    border-color: var(--error) !important;
+    color: #ffcccc !important;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25) !important;
     transform: scale(0.95) translateY(0) !important;
 }
 
@@ -119,12 +145,28 @@
     font-weight: 900 !important;
 }
 
+.btn-purple:active {
+    background: linear-gradient(145deg, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0.1)) !important;
+    border-color: #8a2be2 !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.25) !important;
+    transform: scale(0.95) translateY(0) !important;
+}
+
 .btn-orange {
     background: linear-gradient(145deg, rgba(255, 152, 0, 0.15), rgba(255, 152, 0, 0.05)) !important;
     color: var(--amber) !important;
     border: 1px solid rgba(255, 152, 0, 0.4) !important;
     box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1) !important;
     font-weight: 900 !important;
+}
+
+.btn-orange:active {
+    background: linear-gradient(145deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.1)) !important;
+    border-color: #ff9800 !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.25) !important;
+    transform: scale(0.95) translateY(0) !important;
 }
 
 .copy-btn {
@@ -139,6 +181,7 @@
     color: var(--text-main);
     transition: all 0.2s;
     letter-spacing: 0.5px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .copy-btn:active {
@@ -160,6 +203,13 @@
     align-items: center;
     justify-content: center;
     transition: 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn:active {
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 8px;
+    transform: scale(0.95);
 }
 
 .icon-only {
@@ -187,4 +237,5 @@
     color: var(--error);
     font-size: 1.5rem;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }

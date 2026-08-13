@@ -177,7 +177,7 @@ self.addEventListener("message", function(e) {
                     } else if (isPartialMatch) {
                         match = !0;
                         score = 500;
-                        cClass = "normal-white-card"
+                        cClass = "thin-white-card"
                     }
                     if (match) {
                         results.push({
@@ -256,7 +256,7 @@ self.addEventListener("message", function(e) {
                                 if (partialMatch) {
                                     match = !0;
                                     score = 500;
-                                    cClass = "normal-white-card"
+                                    cClass = "thin-white-card"
                                 }
                             }
                         }
